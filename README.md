@@ -6,14 +6,73 @@ icons, machine-enforced design rules, and agent guidance for Codex and Claude.
 
 ## Start a new project
 
-```bash
-./scripts/new-project.sh my-project
-cd ~/sites/my-project
-npm install
-# Edit the active tokens/theme.css (brand colors in OKLCH, fonts)
-npm run contrast-check
-npm run build
-```
+## Three ways to use this repo
+
+base-ds works in three scenarios. Pick the one that matches your situation.
+
+### 1. New project, no design direction yet
+
+Use the script. Everything (CLAUDE.md, AGENTS.md, RULES.md, skills, checks)
+is copied in, so Claude Code and Codex are constrained from the first prompt.
+No special prompt needed.
+
+    ./scripts/new-project.sh my-project
+    cd ~/sites/my-project
+    npm install
+    npm run contrast-check
+    npm run build
+
+The agent will ask for a brand direction (colors, fonts, mood) before
+building UI, and it goes into tokens/theme.css. The agent must not invent
+a brand on its own.
+
+### 2. Existing project with an established design
+
+The project already has a look (colors, fonts) that must survive the
+migration. The design system is adopted underneath the current design,
+not instead of it. Give the agent this prompt:
+
+    This project should adopt my design system base-ds
+    (https://github.com/henrikhellstromgbg/base-ds).
+
+    Phase 1, install: copy tokens/, design-rules/RULES.md, .claude/skills/,
+    and the check scripts (design-check, contrast-check, verify-scales)
+    from base-ds into this repo. Add the npm scripts. Reference RULES.md
+    from this project's existing CLAUDE.md, don't overwrite it.
+
+    Phase 2, audit only, no changes yet: extract this project's current
+    design direction. Inventory the actual colors, fonts, spacing, and
+    radii in use. Convert the brand colors to OKLCH and draft a
+    tokens/theme.css that preserves this project's existing look. Run
+    contrast-check on it. If any current color fails APCA, do NOT silently
+    change it: report which color, on which surface, by how much, and
+    propose the smallest adjustment that passes. I decide. Then run
+    design-check and inventory every violation. Report as a prioritized
+    list and stop.
+
+    Phase 3, after my approval: migrate incrementally, one area at a time,
+    running design-check and contrast-check after each step. Brand colors
+    live in tokens/theme.css only, primitives.css and semantic.css are
+    never edited. The goal is that the app looks the same as today (modulo
+    approved contrast fixes), but built on the token system. Visual drift
+    is a bug, not an improvement. Do not modernize or restyle anything
+    beyond mapping existing styles to tokens.
+
+### 3. Existing project without an established design
+
+Same prompt as scenario 2, but replace phase 2's extraction with a design
+direction conversation: the agent proposes 2-3 brand directions (colors in
+OKLCH, font pairing, mood), you pick one, it goes into tokens/theme.css,
+and the migration maps existing UI onto that direction instead of
+preserving the old look.
+
+### The rule that makes all three work
+
+In every scenario, the agent checks components/ui/README.md for an
+existing component and RULES.md for constraints before styling any new
+UI. If neither covers the case, it stops and asks instead of inventing.
+That line lives in CLAUDE.md and AGENTS.md, and it is what prevents
+design drift mid-project.
 
 The copy includes CLAUDE.md, AGENTS.md, RULES.md, skills, and scripts, so
 Claude Code and Codex are constrained from the first prompt.
