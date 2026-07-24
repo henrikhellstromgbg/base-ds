@@ -12,4 +12,6 @@ Non-negotiable summary:
 - No uppercase. No em/en-dashes in copy. Sentence case everywhere.
 - Icons from `@carbon/icons-react` only.
 - Run `npm run design-check` before finishing any UI task and fix all hits.
-- Missing a component/token/pattern: stop and ask. Do not improvise.
+- Before styling any new UI, check components/ui/README.md for an existing
+  component and RULES.md for constraints. If neither covers the case, stop and
+  ask instead of inventing.

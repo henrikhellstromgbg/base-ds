@@ -8,9 +8,12 @@ composition, not invention. The design decisions are already made.
 @design-rules/RULES.md
 
 Read it before any UI work. Every rule applies to every file, every session.
-When a rule conflicts with your instinct, the rule wins. When something you
-need does not exist, stop and ask (rule P1). Never improvise a one-off
-component, color, or font size.
+When a rule conflicts with your instinct, the rule wins. Never improvise a
+one-off component, color, or font size.
+
+Before styling any new UI, check components/ui/README.md for an existing
+component and RULES.md for constraints. If neither covers the case, stop and
+ask instead of inventing.
 
 ## Architecture
 
