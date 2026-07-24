@@ -4,7 +4,12 @@ A locked, APCA-verified design system for shipping accessible product
 interfaces. It combines OKLCH tokens, Radix-based components, Carbon
 icons, machine-enforced design rules, and agent guidance for Codex and Claude.
 
-## Start a new project
+## Three ways to use this repo
+
+### 1. New project
+
+Start from base-ds as the foundation. `new-project.sh` copies everything and
+sets up a fresh theme file.
 
 ## Three ways to use this repo
 
@@ -77,6 +82,51 @@ design drift mid-project.
 The copy includes CLAUDE.md, AGENTS.md, RULES.md, skills, and scripts, so
 Claude Code and Codex are constrained from the first prompt.
 
+### 2. Existing project with an established design
+
+The project already has a look you want to keep. Adopt the system, capture the
+current brand into tokens, then migrate incrementally without visual drift.
+`adopt.sh` installs base-ds without overwriting anything: it copies tokens,
+RULES.md, skills, and the checks, adds the npm scripts, and appends a base-ds
+section to CLAUDE.md/AGENTS.md. Existing files are skipped and reported.
+
+Run a three-phase migration prompt with the agent:
+
+```
+Phase 1 — install (no visual changes)
+Run ./scripts/adopt.sh /path/to/this/project, then npm install -D the check
+dependencies it lists. Wire the token files into the global stylesheet
+(@import primitives.css, semantic.css, theme.css). Do not restyle anything yet.
+
+Phase 2 — audit only (no visual changes)
+Extract the project's current brand into tokens/theme.css as OKLCH values:
+brand colors, surfaces, fonts, radii, spacing. Do not touch any component or
+view. Produce an APCA report: run npm run contrast-check and npm run
+verify-scales, and list every pairing that fails a tier in RULES.md. Output is
+a report plus a filled-in theme.css, nothing else.
+
+Phase 3 — incremental migration
+Migrate one view at a time onto components/ui and the semantic tokens. The
+established design is the spec: visual drift from it is a bug, not a license to
+redesign. After each view, run npm run design-check and npm run contrast-check
+and fix every hit. If a needed component or token does not exist, stop and ask.
+```
+
+### 3. Existing project without an established design
+
+Same as scenario 2, but there is no design worth preserving. The only change is
+phase 2: instead of extracting one brand, the agent proposes 2-3 brand
+directions (color, type, density) for you to choose from, and the chosen one
+becomes tokens/theme.css. Phases 1 and 3 are identical.
+
+```
+Phase 2 — propose a direction (no visual changes)
+There is no established design to keep. Propose 2-3 distinct brand directions
+as OKLCH theme.css drafts (brand, surfaces, fonts, radii). For each, note the
+intended feel and confirm it passes contrast-check. I pick one; that draft
+becomes the active tokens/theme.css. Then continue to phase 3.
+```
+
 ## Daily commands
 
 | Command | What it does |
@@ -110,7 +160,7 @@ components/ui/          the library (inventory in its README.md)
 components/icons.ts     Carbon icon barrel — the only icon import path
 design-rules/RULES.md   all rules, single source of truth
 .claude/skills/         design-review, new-component, a11y-audit
-scripts/                design-check, contrast-check, new-project
+scripts/                design-check, contrast-check, new-project, adopt
 tools/                  color scale generator with APCA verification
 examples/               reference views showing correct composition
 ```
