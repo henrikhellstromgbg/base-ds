@@ -1,19 +1,31 @@
-/* Active project theme. Edit this file for a project's brand identity. */
+/* Active project theme. Edit this file for a project's brand identity.
+
+   Two roles, and they are usually not the same color:
+   - action: filled buttons and primary CTAs. What the user clicks.
+   - base:   the brand's own identity color. Selection tints, highlights.
+   Mapping a brand color straight onto action is the single most common
+   theming mistake. Decide the two separately.
+
+   After changing any --brand-action value, run: npm run contrast-check */
 
 :root {
-  --brand-primary:        oklch(0.42 0.09 200);
-  --brand-primary-hover:  oklch(0.36 0.09 200);
-  --brand-primary-text:   oklch(1 0 0);
-  --brand-accent:         oklch(0.62 0.12 200);
-  --brand-accent-subtle:  oklch(0.96 0.03 200);
+  /* Action, example: a deep teal */
+  --brand-action:        oklch(0.42 0.09 200);
+  --brand-action-hover:  oklch(0.36 0.09 200);
+  --brand-action-text:   oklch(1 0 0);
+
+  /* Brand identity */
+  --brand-base:          oklch(0.62 0.12 200);
+  --brand-base-subtle:   oklch(0.96 0.03 200);
 
   --font-sans: 'Inter', system-ui, sans-serif;
 }
 
 .dark {
-  --brand-primary:        oklch(0.85 0.07 200);
-  --brand-primary-hover:  oklch(0.90 0.07 200);
-  --brand-primary-text:   oklch(0.15 0.02 200);
-  --brand-accent:         oklch(0.72 0.11 200);
-  --brand-accent-subtle:  oklch(0.24 0.03 200);
+  --brand-action:        oklch(0.85 0.07 200);
+  --brand-action-hover:  oklch(0.90 0.07 200);
+  --brand-action-text:   oklch(0.15 0.02 200);
+
+  --brand-base:          oklch(0.72 0.11 200);
+  --brand-base-subtle:   oklch(0.24 0.03 200);
 }

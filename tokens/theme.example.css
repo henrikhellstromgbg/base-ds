@@ -1,21 +1,30 @@
 /* ==========================================================================
    PROJECT THEME — copy to theme.css in a new project and edit.
    This is the ONLY file that changes between projects.
+
+   Two brand roles, and they are usually NOT the same color:
+   - action: filled buttons and primary CTAs. What the user clicks.
+   - base:   the brand's own identity color. Selection tints, highlights.
+   Painting the brand color onto every button is the most common theming
+   mistake, and it is why these are two slots and not one.
+
    Rules:
    1. Define brand colors in OKLCH.
-   2. After changing --brand-primary or --brand-primary-text, run:
+   2. After changing --brand-action or --brand-action-text, run:
         npm run contrast-check
-      Text on primary must reach APCA Lc 75+ (Lc 60+ if 24px+/bold only).
+      Text on the action color must reach APCA Lc 75+ (Lc 60+ if 24px+/bold only).
    3. Never redefine gray, status colors, spacing, or type scale here.
    ========================================================================== */
 
 :root {
-  /* Brand — example: a deep teal identity */
-  --brand-primary:        oklch(0.42 0.09 200);
-  --brand-primary-hover:  oklch(0.36 0.09 200);
-  --brand-primary-text:   oklch(1 0 0);
-  --brand-accent:         oklch(0.62 0.12 200);
-  --brand-accent-subtle:  oklch(0.96 0.03 200);
+  /* Action — example: a deep teal */
+  --brand-action:        oklch(0.42 0.09 200);
+  --brand-action-hover:  oklch(0.36 0.09 200);
+  --brand-action-text:   oklch(1 0 0);
+
+  /* Brand identity */
+  --brand-base:          oklch(0.62 0.12 200);
+  --brand-base-subtle:   oklch(0.96 0.03 200);
 
   /* Typography — project fonts (loaded via next/font or @font-face) */
   --font-sans: 'Inter', system-ui, sans-serif;
@@ -29,11 +38,12 @@
 }
 
 .dark {
-  /* Dark brand overrides ARE consumed: semantic.css maps --color-primary to
-     var(--brand-primary) in both modes (defaults live in primitives.css). */
-  --brand-accent:         oklch(0.72 0.11 200);
-  --brand-accent-subtle:  oklch(0.24 0.03 200);
-  --brand-primary:        oklch(0.85 0.07 200);
-  --brand-primary-hover:  oklch(0.90 0.07 200);
-  --brand-primary-text:   oklch(0.15 0.02 200);
+  /* Dark brand overrides ARE consumed: semantic.css maps --color-action to
+     var(--brand-action) in both modes (defaults live in primitives.css). */
+  --brand-action:        oklch(0.85 0.07 200);
+  --brand-action-hover:  oklch(0.90 0.07 200);
+  --brand-action-text:   oklch(0.15 0.02 200);
+
+  --brand-base:          oklch(0.72 0.11 200);
+  --brand-base-subtle:   oklch(0.24 0.03 200);
 }
