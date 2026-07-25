@@ -15,6 +15,12 @@ Before styling any new UI, check components/ui/README.md for an existing
 component and RULES.md for constraints. If neither covers the case, stop and
 ask instead of inventing.
 
+Before building any new view, flow, or overlay, and before adding any form,
+read the ux-patterns skill (`.claude/skills/ux-patterns/SKILL.md`). It decides
+which surface a thing belongs on and which control fits the data. This carries
+the same weight as the stop-and-ask rule above: RULES.md says how it should
+look, ux-patterns says what shape it should take.
+
 ## Architecture
 
 - `tokens/primitives.css` — raw OKLCH values, APCA-verified. Never edit, never reference from components.
@@ -28,11 +34,12 @@ ask instead of inventing.
 ## Workflow for UI tasks
 
 1. Read RULES.md (via the import above).
-2. Check `components/ui/` and `examples/` for existing patterns.
-3. Build views by composing existing components. Layout with div/flex/grid using `--space-*` tokens.
-4. Before declaring done: run `npm run design-check`. Fix every violation.
-5. If you changed or added any color pairing: run `npm run contrast-check`.
-6. For a full review, use the design-review skill.
+2. For a new view, flow, overlay, or form: read the ux-patterns skill and pick the surface and controls from it before writing any markup.
+3. Check `components/ui/` and `examples/` for existing patterns.
+4. Build views by composing existing components. Layout with div/flex/grid using `--space-*` tokens.
+5. Before declaring done: run `npm run design-check`. Fix every violation.
+6. If you changed or added any color pairing: run `npm run contrast-check`.
+7. For a full review, use the design-review skill.
 
 ## Verification commands
 

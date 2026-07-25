@@ -27,8 +27,9 @@ FILES=(
   "scripts/design-check.mjs"
   "scripts/contrast-check.mjs"
   "tools/generate-scales.mjs"
+  "MIGRATING.md"
 )
-# All skill files (design-review, new-component, a11y-audit).
+# All skill files (design-review, new-component, a11y-audit, ux-patterns).
 while IFS= read -r f; do
   FILES+=("${f#"$SRC"/}")
 done < <(find "$SRC/.claude/skills" -type f | sort)
@@ -130,11 +131,17 @@ your job is composition, not invention.
 
 - Constraints: `design-rules/RULES.md` (numbered rules, single source of truth).
 - Components: `components/ui/README.md` (the component inventory).
+- Patterns: `.claude/skills/ux-patterns/SKILL.md` (which surface, which control).
 - Checks: `npm run design-check`, `npm run contrast-check`, `npm run verify-scales`.
+- Upgrades: `MIGRATING.md` (one section per breaking change in base-ds).
 
 Before styling any new UI, check components/ui/README.md for an existing
 component and RULES.md for constraints. If neither covers the case, stop and
 ask instead of inventing.
+
+Before building any new view, flow, or overlay, and before adding any form,
+read the ux-patterns skill. RULES.md governs how UI looks; ux-patterns governs
+what shape it takes. Same standing as the stop-and-ask rule above.
 <!-- /base-ds:adopt -->
 EOF
   DOC_RESULT+=("$file: base-ds section $verb")

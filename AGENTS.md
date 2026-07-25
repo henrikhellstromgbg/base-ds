@@ -15,3 +15,8 @@ Non-negotiable summary:
 - Before styling any new UI, check components/ui/README.md for an existing
   component and RULES.md for constraints. If neither covers the case, stop and
   ask instead of inventing.
+- Before building any new view, flow, or overlay, and before adding any form,
+  read `.claude/skills/ux-patterns/SKILL.md`. It decides which surface the
+  thing belongs on and which control fits the data. Same standing as the
+  stop-and-ask rule: RULES.md governs how it looks, ux-patterns governs what
+  shape it takes.
