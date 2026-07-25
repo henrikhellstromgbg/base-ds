@@ -1,8 +1,8 @@
 // Vertical list of item rows: the list equivalent of Table, for content that
 // is not tabular. A row is static, a link, or a button. When interactive, a
 // stretched overlay makes the whole row the click target while trailing
-// controls stay clickable because the full-row overlay is painted first, so a
-// row never nests a button inside a link or needs an ad hoc z-index.
+// controls stay clickable on the tokenized raised layer above the overlay, so
+// a row never nests a button inside a link or relies on an ad hoc z-index.
 //
 // The row owns its own inner padding (A15): the hover surface must not sit
 // flush against the text. Views pass content, never row layout (A16).
@@ -95,7 +95,7 @@ function DataRow({
       <div className="min-w-0 flex-1 text-[length:var(--text-sm)] text-[var(--color-text-primary)]">
         {children}
       </div>
-      {trailing && <span className="relative shrink-0">{trailing}</span>}
+      {trailing && <span className="relative z-[var(--z-raised)] shrink-0">{trailing}</span>}
     </div>
   );
 }

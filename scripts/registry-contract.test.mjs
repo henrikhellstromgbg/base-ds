@@ -51,6 +51,13 @@ const entrypoints = files.map((file) => file.replace(/\.tsx$/, '')).sort();
 assert.equal(new Set(entries.map(({ entrypoint }) => entrypoint)).size, entries.length, 'Registry entrypoints must be unique.');
 assert.deepEqual(sortedUnique(entries.map(({ entrypoint }) => entrypoint)), entrypoints, 'Registry entrypoints must match components/ui files.');
 
+const dataListSource = readFileSync(join(uiRoot, 'data-list.tsx'), 'utf8');
+assert.match(
+  dataListSource,
+  /trailing && <span className="relative z-\[var\(--z-raised\)\] shrink-0">/,
+  'DataRow trailing actions must stay above the stretched row control.',
+);
+
 for (const entry of entries) {
   assert.deepEqual(
     sortedUnique(entry.exports),
