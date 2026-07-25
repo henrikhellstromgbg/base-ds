@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "switch",
+  "title": "Switch",
+  "description": "The base-ds switch component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "clsx@^2.1.1",
+    "radix-ui@^1.6.7",
+    "tailwind-merge@^3.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/switch.tsx",
+      "content": "'use client';\n\nimport * as React from 'react';\nimport { Switch as SwitchPrimitive } from 'radix-ui';\nimport { cn } from '@/lib/cn';\n\nfunction Switch({ className, size = 'default', ...props }: React.ComponentProps<typeof SwitchPrimitive.Root> & { size?: 'sm' | 'default' }) {\n  return (\n    <SwitchPrimitive.Root\n      data-size={size}\n      className={cn(\n        'group relative inline-flex h-[var(--touch-target-min)] w-[var(--touch-target-min)] shrink-0 cursor-pointer items-center',\n        'rounded-[var(--radius-full)] disabled:cursor-not-allowed disabled:opacity-50',\n        'before:absolute before:left-1/2 before:-translate-x-1/2',\n        'before:h-[var(--space-6)] before:w-[var(--space-10)]',\n        'data-[size=sm]:before:h-[var(--space-5)] data-[size=sm]:before:w-[var(--space-8)]',\n        'before:rounded-[var(--radius-full)] before:bg-[var(--color-border-strong)]',\n        'before:transition-colors before:duration-[var(--duration-fast)] before:ease-[var(--ease-out)]',\n        'hover:before:bg-[var(--color-text-secondary)] active:before:bg-[var(--color-surface-active)]',\n        'data-[state=checked]:before:bg-[var(--color-action)] aria-invalid:before:bg-[var(--color-status-error-bg)]',\n        className\n      )}\n      {...props}\n    >\n      <SwitchPrimitive.Thumb\n        className={cn(\n          'pointer-events-none absolute left-[var(--space-1)] block size-[var(--space-4)] cursor-pointer',\n          'group-data-[size=sm]:left-[var(--space-2)] group-data-[size=sm]:size-[var(--space-3)]',\n          'rounded-[var(--radius-full)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)]',\n          'transition-transform duration-[var(--duration-base)] ease-[var(--ease-out)]',\n          'group-data-[state=checked]:translate-x-[var(--space-5)]',\n          'group-data-[size=sm]:group-data-[state=checked]:translate-x-[var(--space-4)]'\n        )}\n      />\n    </SwitchPrimitive.Root>\n  );\n}\n\nexport { Switch };\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "lib/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:ui"
+}

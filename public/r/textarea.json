@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea",
+  "title": "Textarea",
+  "description": "The base-ds textarea component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "clsx@^2.1.1",
+    "tailwind-merge@^3.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/textarea.tsx",
+      "content": "import * as React from 'react';\nimport { cn } from '@/lib/cn';\n\nconst Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'textarea'>>(\n  ({ className, ...props }, ref) => (\n    <textarea\n      ref={ref}\n      className={cn(\n        'field-sizing-content min-h-[var(--space-24)] w-full rounded-[var(--radius-sm)]',\n        'border border-[var(--color-border)] bg-[var(--color-surface)]',\n        'px-[var(--space-3)] py-[var(--space-2)]',\n        'text-[length:var(--text-sm)] text-[var(--color-text-primary)]',\n        'placeholder:text-[var(--color-text-tertiary)]',\n        'transition-colors duration-[var(--duration-fast)] ease-[var(--ease-out)]',\n        'hover:border-[var(--color-border-strong)]',\n        'disabled:cursor-not-allowed disabled:bg-[var(--color-surface-sunken)] disabled:text-[var(--color-text-disabled)]',\n        'aria-invalid:border-[var(--color-status-error)]',\n        className\n      )}\n      {...props}\n    />\n  )\n);\nTextarea.displayName = 'Textarea';\n\nexport { Textarea };\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "lib/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:ui"
+}

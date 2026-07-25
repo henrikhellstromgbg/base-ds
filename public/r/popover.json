@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "popover",
+  "title": "Popover",
+  "description": "The base-ds popover component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "clsx@^2.1.1",
+    "radix-ui@^1.6.7",
+    "tailwind-merge@^3.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/popover.tsx",
+      "content": "'use client';\n\nimport * as React from 'react';\nimport { Popover as PopoverPrimitive } from 'radix-ui';\n\nimport { cn } from '@/lib/cn';\n\nconst Popover = PopoverPrimitive.Root;\nconst PopoverTrigger = PopoverPrimitive.Trigger;\nconst PopoverAnchor = PopoverPrimitive.Anchor;\n\nfunction PopoverContent({ className, align = 'center', sideOffset = 4, ...props }: React.ComponentProps<typeof PopoverPrimitive.Content>) {\n  return (\n    <PopoverPrimitive.Portal>\n      <PopoverPrimitive.Content\n        data-slot=\"popover-content\"\n        align={align}\n        sideOffset={sideOffset}\n        className={cn(\n          'z-[var(--z-dropdown)] flex w-72 origin-[var(--radix-popover-content-transform-origin)] flex-col',\n          'gap-[var(--space-3)] rounded-[var(--radius-lg)] border border-[var(--color-border)]',\n          'bg-[var(--color-surface-raised)] p-[var(--space-4)] text-[length:var(--text-sm)] text-[var(--color-text-primary)] shadow-[var(--shadow-md)]',\n          'duration-[var(--duration-base)] ease-[var(--ease-out)]',\n          'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',\n          'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',\n          className\n        )}\n        {...props}\n      />\n    </PopoverPrimitive.Portal>\n  );\n}\n\nfunction PopoverHeader({ className, ...props }: React.ComponentProps<'div'>) {\n  return <div data-slot=\"popover-header\" className={cn('flex flex-col gap-[var(--space-1)]', className)} {...props} />;\n}\n\nfunction PopoverTitle({ className, ...props }: React.ComponentProps<'h2'>) {\n  return <h2 data-slot=\"popover-title\" className={cn('font-medium text-[var(--color-text-primary)]', className)} {...props} />;\n}\n\nfunction PopoverDescription({ className, ...props }: React.ComponentProps<'p'>) {\n  return <p data-slot=\"popover-description\" className={cn('text-[var(--color-text-secondary)]', className)} {...props} />;\n}\n\nexport { Popover, PopoverAnchor, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger };\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "lib/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:ui"
+}

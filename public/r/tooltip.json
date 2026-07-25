@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip",
+  "title": "Tooltip",
+  "description": "The base-ds tooltip component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "clsx@^2.1.1",
+    "radix-ui@^1.6.7",
+    "tailwind-merge@^3.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/tooltip.tsx",
+      "content": "'use client';\n\nimport * as React from 'react';\nimport { Tooltip as TooltipPrimitive } from 'radix-ui';\n\nimport { cn } from '@/lib/cn';\n\nfunction TooltipProvider({ delayDuration = 400, ...props }: React.ComponentProps<typeof TooltipPrimitive.Provider>) {\n  return <TooltipPrimitive.Provider data-slot=\"tooltip-provider\" delayDuration={delayDuration} {...props} />;\n}\n\nconst Tooltip = TooltipPrimitive.Root;\nconst TooltipTrigger = TooltipPrimitive.Trigger;\n\nfunction TooltipContent({ className, sideOffset = 4, children, ...props }: React.ComponentProps<typeof TooltipPrimitive.Content>) {\n  return (\n    <TooltipPrimitive.Portal>\n      <TooltipPrimitive.Content\n        data-slot=\"tooltip-content\"\n        sideOffset={sideOffset}\n        className={cn(\n          'z-[var(--z-tooltip)] inline-flex w-fit max-w-xs origin-[var(--radix-tooltip-content-transform-origin)] items-center',\n          'gap-[var(--space-2)] rounded-[var(--radius-sm)] bg-[var(--color-text-primary)]',\n          'px-[var(--space-3)] py-[var(--space-2)] text-[length:var(--text-sm)] text-[var(--color-text-inverse)] shadow-[var(--shadow-md)]',\n          'duration-[var(--duration-base)] ease-[var(--ease-out)]',\n          'data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95',\n          'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',\n          className\n        )}\n        {...props}\n      >\n        {children}\n        <TooltipPrimitive.Arrow className=\"fill-[var(--color-text-primary)]\" />\n      </TooltipPrimitive.Content>\n    </TooltipPrimitive.Portal>\n  );\n}\n\nexport { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger };\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "lib/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:ui"
+}

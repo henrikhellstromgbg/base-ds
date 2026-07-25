@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge",
+  "title": "Badge",
+  "description": "The base-ds badge component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "@carbon/icons-react@^11.60.0",
+    "class-variance-authority@^0.7.1",
+    "clsx@^2.1.1",
+    "tailwind-merge@^3.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "node_modules/.cache/base-ds-registry/badge/components/ui/badge.tsx.source",
+      "content": "import * as React from 'react';\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport { CheckmarkFilled, ErrorFilled, InformationFilled, WarningFilled } from '@/components/base-ds-icons/badge';\nimport { cn } from '@/lib/cn';\n\n// Status badges always pair color with an icon (rule N9).\n\nconst badgeVariants = cva(\n  [\n    'inline-flex items-center gap-1.5 rounded-[var(--radius-full)] px-2.5 py-0.5',\n    'text-[length:var(--text-sm)] font-medium',\n  ],\n  {\n    variants: {\n      variant: {\n        neutral: 'bg-[var(--color-surface-sunken)] text-[var(--color-text-secondary)] border border-[var(--color-border-subtle)]',\n        error: 'bg-[var(--color-status-error-bg)] text-[var(--color-status-error-text)] border border-[var(--color-status-error-border)]',\n        warning: 'bg-[var(--color-status-warning-bg)] text-[var(--color-status-warning-text)] border border-[var(--color-status-warning-border)]',\n        success: 'bg-[var(--color-status-success-bg)] text-[var(--color-status-success-text)] border border-[var(--color-status-success-border)]',\n        info: 'bg-[var(--color-status-info-bg)] text-[var(--color-status-info-text)] border border-[var(--color-status-info-border)]',\n      },\n    },\n    defaultVariants: { variant: 'neutral' },\n  }\n);\n\nconst STATUS_ICON = {\n  error: ErrorFilled,\n  warning: WarningFilled,\n  success: CheckmarkFilled,\n  info: InformationFilled,\n  neutral: null,\n} as const;\n\nexport interface BadgeProps\n  extends React.HTMLAttributes<HTMLSpanElement>,\n    VariantProps<typeof badgeVariants> {\n  showIcon?: boolean;\n}\n\nfunction Badge({ className, variant = 'neutral', showIcon = true, children, ...props }: BadgeProps) {\n  const Icon = variant ? STATUS_ICON[variant] : null;\n  return (\n    <span className={cn(badgeVariants({ variant }), className)} {...props}>\n      {showIcon && Icon && <Icon size={16} aria-hidden=\"true\" />}\n      {children}\n    </span>\n  );\n}\n\nexport { Badge, badgeVariants };\n",
+      "type": "registry:file",
+      "target": "components/ui/badge.tsx"
+    },
+    {
+      "path": "lib/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    },
+    {
+      "path": "node_modules/.cache/base-ds-registry/badge/icons.ts.source",
+      "content": "export {\n  CheckmarkFilled,\n  ErrorFilled,\n  InformationFilled,\n  WarningFilled,\n} from '@carbon/icons-react';\n",
+      "type": "registry:file",
+      "target": "components/base-ds-icons/badge.ts"
+    }
+  ],
+  "type": "registry:ui"
+}

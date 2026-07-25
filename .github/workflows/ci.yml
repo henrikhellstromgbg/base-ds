@@ -22,4 +22,6 @@ jobs:
       - run: npm run design-check
       - run: npm run contrast-check
       - run: npm run verify-scales
+      - run: npm run registry:build
+      - run: git diff --exit-code -- registry.json public/r
       - run: npm run build

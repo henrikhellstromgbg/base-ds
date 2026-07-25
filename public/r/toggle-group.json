@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toggle-group",
+  "title": "Toggle Group",
+  "description": "The base-ds toggle-group component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "class-variance-authority@^0.7.1",
+    "clsx@^2.1.1",
+    "radix-ui@^1.6.7",
+    "tailwind-merge@^3.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/toggle-group.tsx",
+      "content": "'use client';\n\nimport * as React from 'react';\nimport { ToggleGroup as ToggleGroupPrimitive } from 'radix-ui';\nimport { type VariantProps } from 'class-variance-authority';\nimport { cn } from '@/lib/cn';\nimport { toggleVariants } from '@/components/ui/toggle';\n\ntype ToggleContextValue = VariantProps<typeof toggleVariants> & { spacing: 'none' | 'sm' };\nconst ToggleGroupContext = React.createContext<ToggleContextValue>({ variant: 'default', size: 'default', spacing: 'sm' });\n\nfunction ToggleGroup({ className, variant, size, spacing = 'sm', children, ...props }: React.ComponentProps<typeof ToggleGroupPrimitive.Root> & VariantProps<typeof toggleVariants> & { spacing?: 'none' | 'sm' }) {\n  return (\n    <ToggleGroupPrimitive.Root\n      data-spacing={spacing}\n      className={cn(\n        'group/toggle-group flex w-fit items-center gap-[var(--space-1)] rounded-[var(--radius-md)]',\n        'data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch',\n        'data-[spacing=none]:gap-0',\n        className\n      )}\n      {...props}\n    >\n      <ToggleGroupContext.Provider value={{ variant, size, spacing }}>{children}</ToggleGroupContext.Provider>\n    </ToggleGroupPrimitive.Root>\n  );\n}\n\nfunction ToggleGroupItem({ className, variant, size, ...props }: React.ComponentProps<typeof ToggleGroupPrimitive.Item> & VariantProps<typeof toggleVariants>) {\n  const context = React.useContext(ToggleGroupContext);\n  const resolvedVariant = context.variant ?? variant;\n  const resolvedSize = context.size ?? size;\n\n  return (\n    <ToggleGroupPrimitive.Item\n      className={cn(\n        toggleVariants({ variant: resolvedVariant, size: resolvedSize }),\n        'shrink-0 cursor-pointer',\n        context.spacing === 'none' && [\n          'rounded-none',\n          'group-data-[orientation=horizontal]/toggle-group:first:rounded-l-[var(--radius-md)]',\n          'group-data-[orientation=horizontal]/toggle-group:last:rounded-r-[var(--radius-md)]',\n          'group-data-[orientation=vertical]/toggle-group:first:rounded-t-[var(--radius-md)]',\n          'group-data-[orientation=vertical]/toggle-group:last:rounded-b-[var(--radius-md)]',\n          resolvedVariant === 'outline' && [\n            'group-data-[orientation=horizontal]/toggle-group:border-l-0 group-data-[orientation=horizontal]/toggle-group:first:border-l',\n            'group-data-[orientation=vertical]/toggle-group:border-t-0 group-data-[orientation=vertical]/toggle-group:first:border-t',\n          ],\n        ],\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { ToggleGroup, ToggleGroupItem };\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "components/ui/toggle.tsx",
+      "content": "'use client';\n\nimport * as React from 'react';\nimport { Toggle as TogglePrimitive } from 'radix-ui';\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport { cn } from '@/lib/cn';\n\nconst toggleVariants = cva(\n  [\n    'inline-flex min-h-[var(--touch-target-min)] min-w-[var(--touch-target-min)] cursor-pointer items-center justify-center',\n    'gap-[var(--space-2)] whitespace-nowrap rounded-[var(--radius-md)] px-[var(--space-3)]',\n    'text-[length:var(--text-sm)] font-medium text-[var(--color-text-primary)]',\n    'transition-colors duration-[var(--duration-fast)] ease-[var(--ease-out)]',\n    'hover:bg-[var(--color-surface-hover)] active:bg-[var(--color-surface-active)]',\n    'data-[state=on]:bg-[var(--color-brand-subtle)] data-[state=on]:text-[var(--color-text-primary)]',\n    'disabled:cursor-not-allowed disabled:opacity-50',\n    '[&_svg]:pointer-events-none [&_svg]:shrink-0',\n  ],\n  {\n    variants: {\n      variant: {\n        default: 'bg-transparent',\n        outline: 'border border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-border-strong)]',\n      },\n      size: {\n        sm: 'px-[var(--space-2)]',\n        default: 'px-[var(--space-3)]',\n        lg: 'px-[var(--space-4)] text-[length:var(--text-base)]',\n      },\n    },\n    defaultVariants: { variant: 'default', size: 'default' },\n  }\n);\n\nfunction Toggle({ className, variant, size, ...props }: React.ComponentProps<typeof TogglePrimitive.Root> & VariantProps<typeof toggleVariants>) {\n  return <TogglePrimitive.Root className={cn(toggleVariants({ variant, size }), className)} {...props} />;\n}\n\nexport { Toggle, toggleVariants };\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "lib/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:ui"
+}

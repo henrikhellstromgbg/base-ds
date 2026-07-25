@@ -1,0 +1,2425 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "base-ds",
+  "homepage": "https://github.com/henrikhellstromgbg/base-ds",
+  "items": [
+    {
+      "name": "base-ds-tokens",
+      "type": "registry:style",
+      "title": "base-ds tokens",
+      "description": "The immutable base-ds primitive and semantic tokens, merged into the project stylesheet without replacing its global styles.",
+      "files": [
+        {
+          "path": "tokens/primitives.css",
+          "type": "registry:file",
+          "target": "tokens/primitives.css"
+        },
+        {
+          "path": "tokens/semantic.css",
+          "type": "registry:file",
+          "target": "tokens/semantic.css"
+        }
+      ],
+      "css": {
+        "@import \"@/tokens/primitives.css\"": {},
+        "@import \"@/tokens/semantic.css\"": {}
+      }
+    },
+    {
+      "name": "base-ds",
+      "type": "registry:base",
+      "title": "base-ds",
+      "description": "The complete Radix-first base-ds component library, semantic tokens, Carbon icons, and agent-safe component contract.",
+      "dependencies": [
+        "@base-ui/react@^1.6.0",
+        "@carbon/icons-react@^11.60.0",
+        "@radix-ui/react-alert-dialog@^1.1.23",
+        "@radix-ui/react-dialog@^1.1.6",
+        "@radix-ui/react-select@^2.3.7",
+        "@radix-ui/react-slot@^1.1.2",
+        "@shadcn/react@^0.2.1",
+        "@tanstack/react-table@^8.21.3",
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "cmdk@^1.1.1",
+        "embla-carousel-react@^8.6.0",
+        "input-otp@^1.4.2",
+        "next-themes@^0.4.6",
+        "radix-ui@^1.6.7",
+        "react-day-picker@^10.0.1",
+        "react-resizable-panels@^4.12.2",
+        "recharts@^3.10.0",
+        "sonner@^2.0.7",
+        "tailwind-merge@^3.0.2",
+        "vaul@^1.1.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/icons.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "components/ui/accordion.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/alert-dialog.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/alert.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/aspect-ratio.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/async-state.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/attachment.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/avatar-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/avatar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/badge.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/breadcrumb.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/bubble.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/calendar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/card.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/carousel.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/chart.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/checkbox.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/collapsible.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/combobox.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/command.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/context-menu.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/data-list.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/data-table.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/date-picker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/dialog.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/direction.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/drawer.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/dropdown-menu.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/empty-state.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/empty.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/file-upload.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/form-field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/hover-card.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/input-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/input-otp.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/item.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/kbd.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/marker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/menubar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/message-scroller.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/message.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/native-select.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/navigation-menu.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/page-frame.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/page-header.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/pagination.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/popover.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/progress.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/radio-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/resizable.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/scroll-area.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/section-header.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/select.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/separator.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/sheet.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/sidebar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/skeleton.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/slider.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/sonner.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/spinner.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/status-indicator.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/switch.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/table.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/tabs.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/textarea.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/toggle-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/toggle.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/tooltip.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/typography.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "hooks/use-mobile.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "style": "radix-nova",
+      "baseColor": "neutral"
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "The base-ds accordion component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "node_modules/.cache/base-ds-registry/accordion/components/ui/accordion.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/accordion.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/accordion/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/accordion.ts"
+        }
+      ]
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "title": "Alert Dialog",
+      "description": "The base-ds alert-dialog component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@radix-ui/react-alert-dialog@^1.1.23",
+        "@radix-ui/react-slot@^1.1.2",
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/alert-dialog.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "The base-ds alert component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "node_modules/.cache/base-ds-registry/alert/components/ui/alert.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/alert.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/alert/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/alert.ts"
+        }
+      ]
+    },
+    {
+      "name": "aspect-ratio",
+      "type": "registry:ui",
+      "title": "Aspect Ratio",
+      "description": "The base-ds aspect-ratio component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "radix-ui@^1.6.7"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/aspect-ratio.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "attachment",
+      "type": "registry:ui",
+      "title": "Attachment",
+      "description": "The base-ds attachment component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@radix-ui/react-slot@^1.1.2",
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/attachment.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "The base-ds avatar component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/avatar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "avatar-group",
+      "type": "registry:ui",
+      "title": "Avatar Group",
+      "description": "The base-ds avatar-group component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/avatar-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/avatar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "The base-ds badge component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "node_modules/.cache/base-ds-registry/badge/components/ui/badge.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/badge.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/badge/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/badge.ts"
+        }
+      ]
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "The base-ds breadcrumb component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "node_modules/.cache/base-ds-registry/breadcrumb/components/ui/breadcrumb.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/breadcrumb.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/breadcrumb/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/breadcrumb.ts"
+        }
+      ]
+    },
+    {
+      "name": "bubble",
+      "type": "registry:ui",
+      "title": "Bubble",
+      "description": "The base-ds bubble component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/bubble.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "button-group",
+      "type": "registry:ui",
+      "title": "Button Group",
+      "description": "The base-ds button-group component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/button-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/separator.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "The base-ds button component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@radix-ui/react-slot@^1.1.2",
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Calendar",
+      "description": "The base-ds calendar component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "@radix-ui/react-slot@^1.1.2",
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "react-day-picker@^10.0.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/calendar/components/ui/calendar.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/calendar.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/calendar/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/calendar.ts"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "The base-ds card component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/card.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "carousel",
+      "type": "registry:ui",
+      "title": "Carousel",
+      "description": "The base-ds carousel component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "@radix-ui/react-slot@^1.1.2",
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "embla-carousel-react@^8.6.0",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/carousel/components/ui/carousel.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/carousel.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/carousel/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/carousel.ts"
+        }
+      ]
+    },
+    {
+      "name": "chart",
+      "type": "registry:ui",
+      "title": "Chart",
+      "description": "The base-ds chart component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "recharts@^3.10.0",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/chart.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "The base-ds checkbox component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "node_modules/.cache/base-ds-registry/checkbox/components/ui/checkbox.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/checkbox.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/checkbox/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/checkbox.ts"
+        }
+      ]
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "description": "The base-ds collapsible component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "radix-ui@^1.6.7"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/collapsible.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "combobox",
+      "type": "registry:ui",
+      "title": "Combobox",
+      "description": "The base-ds combobox component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@base-ui/react@^1.6.0",
+        "@carbon/icons-react@^11.60.0",
+        "@radix-ui/react-slot@^1.1.2",
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/combobox/components/ui/combobox.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/combobox.tsx"
+        },
+        {
+          "path": "components/ui/input-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/textarea.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/combobox/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/combobox.ts"
+        }
+      ]
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command",
+      "description": "The base-ds command component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "@radix-ui/react-dialog@^1.1.6",
+        "clsx@^2.1.1",
+        "cmdk@^1.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "node_modules/.cache/base-ds-registry/command/components/ui/command.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/command.tsx"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/command/components/ui/dialog.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/dialog.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/command/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/command.ts"
+        }
+      ]
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Context Menu",
+      "description": "The base-ds context-menu component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "node_modules/.cache/base-ds-registry/context-menu/components/ui/context-menu.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/context-menu.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/context-menu/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/context-menu.ts"
+        }
+      ]
+    },
+    {
+      "name": "data-list",
+      "type": "registry:ui",
+      "title": "Data List",
+      "description": "The base-ds data-list component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/data-list.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "Data Table",
+      "description": "The base-ds data-table component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@radix-ui/react-slot@^1.1.2",
+        "@tanstack/react-table@^8.21.3",
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/data-table.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/table.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "title": "Date Picker",
+      "description": "The base-ds date-picker component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "@radix-ui/react-slot@^1.1.2",
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "react-day-picker@^10.0.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/date-picker/components/ui/calendar.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/calendar.tsx"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/date-picker/components/ui/date-picker.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/date-picker.tsx"
+        },
+        {
+          "path": "components/ui/popover.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/date-picker/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/date-picker.ts"
+        }
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "The base-ds dialog component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "@radix-ui/react-dialog@^1.1.6",
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "node_modules/.cache/base-ds-registry/dialog/components/ui/dialog.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/dialog.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/dialog/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/dialog.ts"
+        }
+      ]
+    },
+    {
+      "name": "direction",
+      "type": "registry:ui",
+      "title": "Direction",
+      "description": "The base-ds direction component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "radix-ui@^1.6.7"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/direction.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "The base-ds drawer component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2",
+        "vaul@^1.1.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/drawer.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown Menu",
+      "description": "The base-ds dropdown-menu component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "node_modules/.cache/base-ds-registry/dropdown-menu/components/ui/dropdown-menu.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/dropdown-menu.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/dropdown-menu/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/dropdown-menu.ts"
+        }
+      ]
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "Empty State",
+      "description": "The base-ds empty-state component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/empty-state.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "empty",
+      "type": "registry:ui",
+      "title": "Empty",
+      "description": "The base-ds empty component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/empty.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "title": "Field",
+      "description": "The base-ds field component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/field.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/separator.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "file-upload",
+      "type": "registry:ui",
+      "title": "File Upload",
+      "description": "The base-ds file-upload component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "node_modules/.cache/base-ds-registry/file-upload/components/ui/file-upload.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/file-upload.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/file-upload/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/file-upload.ts"
+        }
+      ]
+    },
+    {
+      "name": "form-field",
+      "type": "registry:ui",
+      "title": "Form Field",
+      "description": "The base-ds form-field component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "node_modules/.cache/base-ds-registry/form-field/components/ui/form-field.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/form-field.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/form-field/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/form-field.ts"
+        }
+      ]
+    },
+    {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "title": "Hover Card",
+      "description": "The base-ds hover-card component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/hover-card.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "input-group",
+      "type": "registry:ui",
+      "title": "Input Group",
+      "description": "The base-ds input-group component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@radix-ui/react-slot@^1.1.2",
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/input-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/textarea.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "input-otp",
+      "type": "registry:ui",
+      "title": "Input Otp",
+      "description": "The base-ds input-otp component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "input-otp@^1.4.2",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/input-otp.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "The base-ds input component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "item",
+      "type": "registry:ui",
+      "title": "Item",
+      "description": "The base-ds item component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/item.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/separator.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "kbd",
+      "type": "registry:ui",
+      "title": "Kbd",
+      "description": "The base-ds kbd component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/kbd.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "The base-ds label component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "marker",
+      "type": "registry:ui",
+      "title": "Marker",
+      "description": "The base-ds marker component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/marker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "menubar",
+      "type": "registry:ui",
+      "title": "Menubar",
+      "description": "The base-ds menubar component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "node_modules/.cache/base-ds-registry/menubar/components/ui/menubar.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/menubar.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/menubar/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/menubar.ts"
+        }
+      ]
+    },
+    {
+      "name": "message-scroller",
+      "type": "registry:ui",
+      "title": "Message Scroller",
+      "description": "The base-ds message-scroller component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "@radix-ui/react-slot@^1.1.2",
+        "@shadcn/react@^0.2.1",
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/message-scroller/components/ui/message-scroller.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/message-scroller.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/message-scroller/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/message-scroller.ts"
+        }
+      ]
+    },
+    {
+      "name": "message",
+      "type": "registry:ui",
+      "title": "Message",
+      "description": "The base-ds message component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/message.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "native-select",
+      "type": "registry:ui",
+      "title": "Native Select",
+      "description": "The base-ds native-select component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "node_modules/.cache/base-ds-registry/native-select/components/ui/native-select.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/native-select.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/native-select/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/native-select.ts"
+        }
+      ]
+    },
+    {
+      "name": "navigation-menu",
+      "type": "registry:ui",
+      "title": "Navigation Menu",
+      "description": "The base-ds navigation-menu component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "node_modules/.cache/base-ds-registry/navigation-menu/components/ui/navigation-menu.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/navigation-menu.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/navigation-menu/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/navigation-menu.ts"
+        }
+      ]
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "description": "The base-ds pagination component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "@radix-ui/react-slot@^1.1.2",
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/pagination/components/ui/pagination.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/pagination.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/pagination/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/pagination.ts"
+        }
+      ]
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "The base-ds popover component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/popover.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "The base-ds progress component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/progress.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Radio Group",
+      "description": "The base-ds radio-group component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/radio-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "resizable",
+      "type": "registry:ui",
+      "title": "Resizable",
+      "description": "The base-ds resizable component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "react-resizable-panels@^4.12.2",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/resizable.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll Area",
+      "description": "The base-ds scroll-area component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/scroll-area.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "The base-ds select component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "@radix-ui/react-select@^2.3.7",
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "node_modules/.cache/base-ds-registry/select/components/ui/select.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/select.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/select/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/select.ts"
+        }
+      ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "The base-ds separator component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/separator.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "title": "Sheet",
+      "description": "The base-ds sheet component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "@radix-ui/react-slot@^1.1.2",
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/sheet/components/ui/sheet.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/sheet.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/sheet/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/sheet.ts"
+        }
+      ]
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "title": "Sidebar",
+      "description": "The base-ds sidebar component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "@radix-ui/react-slot@^1.1.2",
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/separator.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/sidebar/components/ui/sheet.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/sheet.tsx"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/sidebar/components/ui/sidebar.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/sidebar.tsx"
+        },
+        {
+          "path": "components/ui/skeleton.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/tooltip.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "hooks/use-mobile.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/sidebar/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/sidebar.ts"
+        }
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "The base-ds skeleton component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/skeleton.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "The base-ds slider component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/slider.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "sonner",
+      "type": "registry:ui",
+      "title": "Sonner",
+      "description": "The base-ds sonner component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "next-themes@^0.4.6",
+        "sonner@^2.0.7"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "node_modules/.cache/base-ds-registry/sonner/components/ui/sonner.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/sonner.tsx"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/sonner/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/sonner.ts"
+        }
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "The base-ds spinner component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "@carbon/icons-react@^11.60.0",
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "node_modules/.cache/base-ds-registry/spinner/components/ui/spinner.tsx.source",
+          "type": "registry:file",
+          "target": "components/ui/spinner.tsx"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "node_modules/.cache/base-ds-registry/spinner/icons.ts.source",
+          "type": "registry:file",
+          "target": "components/base-ds-icons/spinner.ts"
+        }
+      ]
+    },
+    {
+      "name": "status-indicator",
+      "type": "registry:ui",
+      "title": "Status Indicator",
+      "description": "The base-ds status-indicator component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/status-indicator.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "The base-ds switch component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/switch.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "The base-ds table component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/table.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "The base-ds tabs component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/tabs.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "The base-ds textarea component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/textarea.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "title": "Toggle Group",
+      "description": "The base-ds toggle-group component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/toggle-group.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "components/ui/toggle.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "title": "Toggle",
+      "description": "The base-ds toggle component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "class-variance-authority@^0.7.1",
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/toggle.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "The base-ds tooltip component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "radix-ui@^1.6.7",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/tooltip.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "typography",
+      "type": "registry:ui",
+      "title": "Typography",
+      "description": "The base-ds typography component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/typography.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "async-state",
+      "type": "registry:ui",
+      "title": "Async State",
+      "description": "The base-ds async-state component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/async-state.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "page-frame",
+      "type": "registry:ui",
+      "title": "Page Frame",
+      "description": "The base-ds page-frame component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/page-frame.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "page-header",
+      "type": "registry:ui",
+      "title": "Page Header",
+      "description": "The base-ds page-header component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/page-header.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "section-header",
+      "type": "registry:ui",
+      "title": "Section Header",
+      "description": "The base-ds section-header component, adapted to semantic tokens and Carbon icons.",
+      "dependencies": [
+        "clsx@^2.1.1",
+        "tailwind-merge@^3.0.2"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+      ],
+      "files": [
+        {
+          "path": "components/ui/section-header.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "lib/cn.ts",
+          "type": "registry:lib"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select",
+  "title": "Select",
+  "description": "The base-ds select component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "@carbon/icons-react@^11.60.0",
+    "@radix-ui/react-select@^2.3.7",
+    "clsx@^2.1.1",
+    "tailwind-merge@^3.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "node_modules/.cache/base-ds-registry/select/components/ui/select.tsx.source",
+      "content": "'use client';\n\n// Styled Radix Select. The trigger deliberately matches the Input control in\n// form-field.tsx so a select and a text input sit level in the same form.\n//\n// FormField clones its child with { id, aria-describedby, invalid, required },\n// so Select forwards those onto the trigger and root: label association and\n// error wiring work the same as for Input (A4, N8).\n\nimport * as React from 'react';\nimport * as SelectPrimitive from '@radix-ui/react-select';\nimport { ChevronDown, Checkmark } from '@/components/base-ds-icons/select';\nimport { cn } from '@/lib/cn';\n\nexport interface SelectProps {\n  value?: string;\n  defaultValue?: string;\n  onValueChange?: (value: string) => void;\n  placeholder?: string;\n  disabled?: boolean;\n  required?: boolean;\n  name?: string;\n  id?: string;\n  invalid?: boolean;\n  'aria-describedby'?: string;\n  'aria-invalid'?: boolean | 'true' | 'false';\n  className?: string;\n  children: React.ReactNode;\n}\n\nfunction Select({\n  value,\n  defaultValue,\n  onValueChange,\n  placeholder,\n  disabled,\n  required,\n  name,\n  id,\n  invalid,\n  className,\n  children,\n  ...aria\n}: SelectProps) {\n  return (\n    <SelectPrimitive.Root\n      value={value}\n      defaultValue={defaultValue}\n      onValueChange={onValueChange}\n      disabled={disabled}\n      required={required}\n      name={name}\n    >\n      <SelectPrimitive.Trigger\n        id={id}\n        aria-describedby={aria['aria-describedby']}\n        aria-invalid={invalid || aria['aria-invalid'] || undefined}\n        className={cn(\n          'flex h-11 w-full cursor-pointer items-center justify-between gap-2',\n          'rounded-[var(--radius-sm)] px-3',\n          'bg-[var(--color-surface)] text-[length:var(--text-sm)] text-[var(--color-text-primary)]',\n          'border border-[var(--color-border)]',\n          'data-[placeholder]:text-[var(--color-text-tertiary)]',\n          'transition-colors duration-[var(--duration-fast)]',\n          'hover:border-[var(--color-border-strong)]',\n          'disabled:cursor-not-allowed disabled:opacity-50',\n          invalid && 'border-[var(--color-status-error)]',\n          className\n        )}\n      >\n        <SelectPrimitive.Value placeholder={placeholder} />\n        <SelectPrimitive.Icon asChild>\n          <ChevronDown size={16} className=\"shrink-0 text-[var(--color-text-tertiary)]\" aria-hidden=\"true\" />\n        </SelectPrimitive.Icon>\n      </SelectPrimitive.Trigger>\n      <SelectPrimitive.Portal>\n        <SelectPrimitive.Content\n          position=\"popper\"\n          sideOffset={4}\n          className={cn(\n            'z-[var(--z-dropdown)] max-h-[var(--radix-select-content-available-height)]',\n            'min-w-[var(--radix-select-trigger-width)] overflow-hidden',\n            'rounded-[var(--radius-sm)] border border-[var(--color-border)]',\n            'bg-[var(--color-surface-raised)] shadow-[var(--shadow-md)]'\n          )}\n        >\n          <SelectPrimitive.Viewport className=\"p-[var(--space-1)]\">{children}</SelectPrimitive.Viewport>\n        </SelectPrimitive.Content>\n      </SelectPrimitive.Portal>\n    </SelectPrimitive.Root>\n  );\n}\n\nexport type SelectItemProps = React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>;\n\nconst SelectItem = React.forwardRef<\n  React.ElementRef<typeof SelectPrimitive.Item>,\n  SelectItemProps\n>(({ className, children, ...props }, ref) => (\n  <SelectPrimitive.Item\n    ref={ref}\n    className={cn(\n      'relative flex cursor-pointer select-none items-center rounded-[var(--radius-sm)]',\n      'py-2 pl-8 pr-3',\n      'text-[length:var(--text-sm)] text-[var(--color-text-primary)]',\n      'data-[highlighted]:bg-[var(--color-surface-hover)]',\n      'focus-visible:bg-[var(--color-surface-hover)]',\n      'data-[disabled]:pointer-events-none data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50',\n      className\n    )}\n    {...props}\n  >\n    <span className=\"absolute left-2 inline-flex items-center\">\n      <SelectPrimitive.ItemIndicator>\n        <Checkmark size={16} aria-hidden=\"true\" />\n      </SelectPrimitive.ItemIndicator>\n    </span>\n    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>\n  </SelectPrimitive.Item>\n));\nSelectItem.displayName = 'SelectItem';\n\nexport { Select, SelectItem };\n",
+      "type": "registry:file",
+      "target": "components/ui/select.tsx"
+    },
+    {
+      "path": "lib/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    },
+    {
+      "path": "node_modules/.cache/base-ds-registry/select/icons.ts.source",
+      "content": "export {\n  Checkmark,\n  ChevronDown,\n} from '@carbon/icons-react';\n",
+      "type": "registry:file",
+      "target": "components/base-ds-icons/select.ts"
+    }
+  ],
+  "type": "registry:ui"
+}

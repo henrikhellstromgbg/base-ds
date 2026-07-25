@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox",
+  "title": "Checkbox",
+  "description": "The base-ds checkbox component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "@carbon/icons-react@^11.60.0",
+    "clsx@^2.1.1",
+    "radix-ui@^1.6.7",
+    "tailwind-merge@^3.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "node_modules/.cache/base-ds-registry/checkbox/components/ui/checkbox.tsx.source",
+      "content": "'use client';\n\nimport * as React from 'react';\nimport { Checkbox as CheckboxPrimitive } from 'radix-ui';\nimport { Checkmark } from '@/components/base-ds-icons/checkbox';\nimport { cn } from '@/lib/cn';\n\nfunction Checkbox({ className, ...props }: React.ComponentProps<typeof CheckboxPrimitive.Root>) {\n  return (\n    <CheckboxPrimitive.Root\n      className={cn(\n        'group inline-flex size-[var(--touch-target-min)] shrink-0 cursor-pointer items-center justify-center',\n        'rounded-[var(--radius-sm)] disabled:cursor-not-allowed disabled:opacity-50',\n        className\n      )}\n      {...props}\n    >\n      <span\n        aria-hidden=\"true\"\n        className={cn(\n          'flex size-[var(--space-5)] items-center justify-center rounded-[var(--radius-sm)]',\n          'border border-[var(--color-border-strong)] bg-[var(--color-surface)]',\n          'transition-colors duration-[var(--duration-fast)] ease-[var(--ease-out)]',\n          'group-hover:border-[var(--color-action)] group-active:bg-[var(--color-surface-active)]',\n          'group-data-[state=checked]:border-[var(--color-action)] group-data-[state=checked]:bg-[var(--color-action)]',\n          'group-aria-invalid:border-[var(--color-status-error)]'\n        )}\n      >\n        <CheckboxPrimitive.Indicator className=\"flex text-[var(--color-action-text)]\">\n          <Checkmark size={16} />\n        </CheckboxPrimitive.Indicator>\n      </span>\n    </CheckboxPrimitive.Root>\n  );\n}\n\nexport { Checkbox };\n",
+      "type": "registry:file",
+      "target": "components/ui/checkbox.tsx"
+    },
+    {
+      "path": "lib/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    },
+    {
+      "path": "node_modules/.cache/base-ds-registry/checkbox/icons.ts.source",
+      "content": "export {\n  Checkmark,\n} from '@carbon/icons-react';\n",
+      "type": "registry:file",
+      "target": "components/base-ds-icons/checkbox.ts"
+    }
+  ],
+  "type": "registry:ui"
+}

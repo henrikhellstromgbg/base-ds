@@ -97,6 +97,7 @@ and that draft becomes the active tokens/theme.css.
 | `npm run design-check` | Machine check of all `[lint]` rules in RULES.md |
 | `npm run contrast-check` | APCA verification of 46 rendered theme-brand pairs |
 | `npm run verify-scales` | Verify the full rendered APCA matrix, parsed from primitives.css and semantic.css |
+| `npm run registry:build` | Regenerate and validate the installable shadcn registry in `public/r/` |
 | `npm run build` | Production Next.js build (the repo is a runnable starter) |
 
 ## Add or change a rule
@@ -123,12 +124,42 @@ a package. What is not shadcn is the skin. Every color, size, radius, shadow,
 and duration is a semantic token, so the components inherit the theme and stay
 APCA-verified.
 
-When a component is missing, build it from its shadcn equivalent as the
-structural starting point, through the new-component skill, and reskin it onto
-tokens. Never `npx shadcn add`: that writes Tailwind palette classes and its
-own CSS variables straight into the file, which breaks N4 and detaches the
-component from the token layer. Never from scratch either, since the shadcn
-version already solved the accessibility and composition work.
+The adapted catalog is checked into `components/ui/`, so agents do not need to
+generate common controls. Two upstream entries intentionally use the base-ds
+equivalent instead: the deprecated toast component is replaced by Sonner and
+`Toaster`, and the upstream form guide is represented by `FormField` and
+`Field` rather than a separate `form` entrypoint. `components.json` keeps the project
+compatible with the shadcn CLI and selects the Radix Nova base. The CLI schema
+does not offer Carbon as an icon-library value, so that compatibility field is
+`lucide`; it does not describe the source contract. Every checked-in component
+uses Carbon through `components/icons.ts`, and `design-check` rejects Lucide
+imports.
+
+To install the complete system into another shadcn project, use the generated
+base item:
+
+```bash
+npx shadcn add https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds.json
+```
+
+Individual items are available at the same path, for example
+`public/r/combobox.json`. Every install depends on the generated
+`base-ds-tokens` style item. The shadcn CLI merges imports for
+`tokens/primitives.css` and `tokens/semantic.css` into the configured global
+stylesheet, preserving the project's existing global rules. Registry installs
+never include `tokens/theme.css`, because that file belongs to the consuming
+project.
+
+Individual items also generate an item-scoped Carbon icon module containing
+only the icons required by that item's dependency closure. They do not install
+or replace the full `components/icons.ts` barrel. The complete `base-ds` item
+still includes that barrel because it installs the complete system.
+
+`registry.json` is generated from the machine-readable component contract, and
+`npm run registry:build` validates every item with the official shadcn CLI. Do
+not run `npx shadcn add` against the upstream catalog inside base-ds: upstream
+output uses its own palette and Lucide icons. Update the adapted source here,
+sync the contract, then rebuild this registry.
 
 ## Architecture summary
 
@@ -137,6 +168,8 @@ tokens/primitives.css   raw OKLCH values (APCA-verified) — never edited in pro
 tokens/semantic.css     --color-* layer, light + dark — never edited in projects
 tokens/theme.css        per-project brand — the ONLY file that varies
 design-system/registry.json  machine contract for supported components and patterns
+registry.json           generated shadcn registry source, built to public/r/
+components.json         shadcn CLI configuration, Radix Nova base
 components/ui/          the library (inventory in its README.md)
 components/icons.ts     Carbon icon barrel — the only icon import path
 design-rules/RULES.md   all rules, single source of truth

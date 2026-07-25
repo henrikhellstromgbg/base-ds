@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "page-frame",
+  "title": "Page Frame",
+  "description": "The base-ds page-frame component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "clsx@^2.1.1",
+    "tailwind-merge@^3.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/page-frame.tsx",
+      "content": "import * as React from 'react';\nimport { cn } from '@/lib/cn';\n\nexport type PageFrameMaxWidth = '4xl' | '5xl';\n\nexport interface PageFrameProps extends React.HTMLAttributes<HTMLElement> {\n  maxWidth?: PageFrameMaxWidth;\n}\n\nconst maxWidthClasses: Record<PageFrameMaxWidth, string> = {\n  '4xl': 'max-w-4xl',\n  '5xl': 'max-w-5xl',\n};\n\nfunction PageFrame({ maxWidth = '4xl', className, ...props }: PageFrameProps) {\n  return (\n    <main\n      className={cn(\n        'mx-auto flex w-full flex-col gap-[var(--space-8)]',\n        'px-[var(--space-6)] py-[var(--space-12)] md:px-[var(--space-10)] md:py-[var(--space-16)]',\n        maxWidthClasses[maxWidth],\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { PageFrame };\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "lib/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:ui"
+}

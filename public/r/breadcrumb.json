@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "breadcrumb",
+  "title": "Breadcrumb",
+  "description": "The base-ds breadcrumb component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "@carbon/icons-react@^11.60.0",
+    "clsx@^2.1.1",
+    "radix-ui@^1.6.7",
+    "tailwind-merge@^3.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "node_modules/.cache/base-ds-registry/breadcrumb/components/ui/breadcrumb.tsx.source",
+      "content": "import * as React from 'react';\nimport { Slot } from 'radix-ui';\n\nimport { ChevronRight, OverflowMenuHorizontal } from '@/components/base-ds-icons/breadcrumb';\nimport { cn } from '@/lib/cn';\n\nfunction Breadcrumb({ className, ...props }: React.ComponentProps<'nav'>) {\n  return <nav aria-label=\"Breadcrumb\" data-slot=\"breadcrumb\" className={cn(className)} {...props} />;\n}\n\nfunction BreadcrumbList({ className, ...props }: React.ComponentProps<'ol'>) {\n  return (\n    <ol\n      data-slot=\"breadcrumb-list\"\n      className={cn(\n        'flex flex-wrap items-center gap-[var(--space-2)] break-words',\n        'text-[length:var(--text-sm)] text-[var(--color-text-secondary)]',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nfunction BreadcrumbItem({ className, ...props }: React.ComponentProps<'li'>) {\n  return (\n    <li\n      data-slot=\"breadcrumb-item\"\n      className={cn('inline-flex items-center gap-[var(--space-1)]', className)}\n      {...props}\n    />\n  );\n}\n\nfunction BreadcrumbLink({ asChild, className, ...props }: React.ComponentProps<'a'> & { asChild?: boolean }) {\n  const Comp = asChild ? Slot.Root : 'a';\n  return (\n    <Comp\n      data-slot=\"breadcrumb-link\"\n      className={cn(\n        'inline-flex min-h-[var(--touch-target-min)] cursor-pointer items-center rounded-[var(--radius-sm)] px-[var(--space-2)]',\n        'text-[var(--color-text-secondary)] transition-colors duration-[var(--duration-fast)]',\n        'hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text-primary)]',\n        'active:bg-[var(--color-surface-active)] active:text-[var(--color-text-primary)]',\n        'aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:text-[var(--color-text-disabled)]',\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nfunction BreadcrumbPage({ className, ...props }: React.ComponentProps<'span'>) {\n  return (\n    <span\n      data-slot=\"breadcrumb-page\"\n      aria-current=\"page\"\n      className={cn('px-[var(--space-2)] font-normal text-[var(--color-text-primary)]', className)}\n      {...props}\n    />\n  );\n}\n\nfunction BreadcrumbSeparator({ children, className, ...props }: React.ComponentProps<'li'>) {\n  return (\n    <li\n      data-slot=\"breadcrumb-separator\"\n      role=\"presentation\"\n      aria-hidden=\"true\"\n      className={cn('text-[var(--color-text-tertiary)] [&>svg]:size-4', className)}\n      {...props}\n    >\n      {children ?? <ChevronRight aria-hidden=\"true\" />}\n    </li>\n  );\n}\n\nfunction BreadcrumbEllipsis({ className, ...props }: React.ComponentProps<'span'>) {\n  return (\n    <span\n      data-slot=\"breadcrumb-ellipsis\"\n      role=\"presentation\"\n      aria-hidden=\"true\"\n      className={cn(\n        'flex min-h-[var(--touch-target-min)] min-w-[var(--touch-target-min)] items-center justify-center',\n        'text-[var(--color-text-tertiary)] [&>svg]:size-4',\n        className\n      )}\n      {...props}\n    >\n      <OverflowMenuHorizontal aria-hidden=\"true\" />\n      <span className=\"sr-only\">More</span>\n    </span>\n  );\n}\n\nexport {\n  Breadcrumb,\n  BreadcrumbList,\n  BreadcrumbItem,\n  BreadcrumbLink,\n  BreadcrumbPage,\n  BreadcrumbSeparator,\n  BreadcrumbEllipsis,\n};\n",
+      "type": "registry:file",
+      "target": "components/ui/breadcrumb.tsx"
+    },
+    {
+      "path": "lib/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    },
+    {
+      "path": "node_modules/.cache/base-ds-registry/breadcrumb/icons.ts.source",
+      "content": "export {\n  ChevronRight,\n  OverflowMenuHorizontal,\n} from '@carbon/icons-react';\n",
+      "type": "registry:file",
+      "target": "components/base-ds-icons/breadcrumb.ts"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "typography",
+  "title": "Typography",
+  "description": "The base-ds typography component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "clsx@^2.1.1",
+    "tailwind-merge@^3.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/typography.tsx",
+      "content": "import * as React from 'react';\nimport { cn } from '@/lib/cn';\n\ntype HeadingLevel = 1 | 2 | 3 | 4;\n\ninterface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {\n  level?: HeadingLevel;\n}\n\nconst headingSizes: Record<HeadingLevel, string> = {\n  1: 'text-[length:var(--text-3xl)]',\n  2: 'text-[length:var(--text-2xl)]',\n  3: 'text-[length:var(--text-xl)]',\n  4: 'text-[length:var(--text-lg)]',\n};\n\nfunction Heading({ level = 2, className, ...props }: HeadingProps) {\n  const Component = `h${level}` as const;\n  return (\n    <Component\n      className={cn(\n        'font-semibold tracking-[var(--tracking-tight)] text-[var(--color-text-primary)]',\n        headingSizes[level],\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nconst Text = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(\n  ({ className, ...props }, ref) => (\n    <p\n      ref={ref}\n      className={cn('text-[length:var(--text-base)] leading-relaxed text-[var(--color-text-secondary)]', className)}\n      {...props}\n    />\n  ),\n);\nText.displayName = 'Text';\n\nconst Link = React.forwardRef<HTMLAnchorElement, React.AnchorHTMLAttributes<HTMLAnchorElement>>(\n  ({ className, ...props }, ref) => (\n    <a\n      ref={ref}\n      className={cn(\n        'cursor-pointer text-[var(--color-text-link)] underline decoration-transparent underline-offset-4',\n        'transition-colors duration-[var(--duration-fast)] hover:decoration-current active:opacity-80',\n        className,\n      )}\n      {...props}\n    />\n  ),\n);\nLink.displayName = 'Link';\n\nconst InlineCode = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(\n  ({ className, ...props }, ref) => (\n    <code\n      ref={ref}\n      className={cn(\n        'rounded-[var(--radius-sm)] bg-[var(--color-surface-sunken)] px-[var(--space-2)] py-[var(--space-1)]',\n        'font-mono text-[length:var(--text-sm)] text-[var(--color-text-primary)]',\n        className,\n      )}\n      {...props}\n    />\n  ),\n);\nInlineCode.displayName = 'InlineCode';\n\nexport { Heading, Text, Link, InlineCode };\nexport type { HeadingProps };\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "lib/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:ui"
+}

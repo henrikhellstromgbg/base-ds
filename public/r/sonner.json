@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sonner",
+  "title": "Sonner",
+  "description": "The base-ds sonner component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "@carbon/icons-react@^11.60.0",
+    "next-themes@^0.4.6",
+    "sonner@^2.0.7"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "node_modules/.cache/base-ds-registry/sonner/components/ui/sonner.tsx.source",
+      "content": "\"use client\"\n\nimport { useTheme } from \"next-themes\"\nimport { Toaster as Sonner, type ToasterProps } from \"sonner\"\nimport {\n  CheckmarkFilled,\n  ErrorFilled,\n  InformationFilled,\n  WarningFilled,\n} from \"@/components/base-ds-icons/sonner\"\n\nconst Toaster = ({ ...props }: ToasterProps) => {\n  const { theme = \"system\" } = useTheme()\n\n  return (\n    <Sonner\n      theme={theme as ToasterProps[\"theme\"]}\n      className=\"toaster group\"\n      icons={{\n        success: (\n          <CheckmarkFilled className=\"size-4 text-[var(--color-status-success)]\" aria-hidden=\"true\" />\n        ),\n        info: (\n          <InformationFilled className=\"size-4 text-[var(--color-status-info)]\" aria-hidden=\"true\" />\n        ),\n        warning: (\n          <WarningFilled className=\"size-4 text-[var(--color-status-warning)]\" aria-hidden=\"true\" />\n        ),\n        error: (\n          <ErrorFilled className=\"size-4 text-[var(--color-status-error)]\" aria-hidden=\"true\" />\n        ),\n        loading: (\n          <span\n            aria-hidden=\"true\"\n            className=\"size-4 animate-spin rounded-[var(--radius-full)] border-2 border-[var(--color-border-strong)] border-t-[var(--color-text-primary)]\"\n          />\n        ),\n      }}\n      style={\n        {\n          \"--normal-bg\": \"var(--color-surface-raised)\",\n          \"--normal-text\": \"var(--color-text-primary)\",\n          \"--normal-border\": \"var(--color-border)\",\n          \"--border-radius\": \"var(--radius-md)\",\n        } as React.CSSProperties\n      }\n      toastOptions={{\n        classNames: {\n          toast: \"cn-toast text-[length:var(--text-sm)] shadow-[var(--shadow-md)]\",\n          description: \"text-[var(--color-text-secondary)]\",\n          actionButton: \"cursor-pointer bg-[var(--color-action)] text-[var(--color-action-text)]\",\n          cancelButton: \"cursor-pointer bg-[var(--color-surface)] text-[var(--color-text-primary)]\",\n        },\n      }}\n      {...props}\n    />\n  )\n}\n\nexport { Toaster }\n",
+      "type": "registry:file",
+      "target": "components/ui/sonner.tsx"
+    },
+    {
+      "path": "node_modules/.cache/base-ds-registry/sonner/icons.ts.source",
+      "content": "export {\n  CheckmarkFilled,\n  ErrorFilled,\n  InformationFilled,\n  WarningFilled,\n} from '@carbon/icons-react';\n",
+      "type": "registry:file",
+      "target": "components/base-ds-icons/sonner.ts"
+    }
+  ],
+  "type": "registry:ui"
+}

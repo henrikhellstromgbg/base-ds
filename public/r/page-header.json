@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "page-header",
+  "title": "Page Header",
+  "description": "The base-ds page-header component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "clsx@^2.1.1",
+    "tailwind-merge@^3.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/page-header.tsx",
+      "content": "import * as React from 'react';\nimport { cn } from '@/lib/cn';\n\nexport interface PageHeaderProps extends React.HTMLAttributes<HTMLElement> {\n  title: string;\n  description?: React.ReactNode;\n  action?: React.ReactNode;\n}\n\nfunction PageHeader({ title, description, action, className, ...props }: PageHeaderProps) {\n  return (\n    <header\n      className={cn(\n        'flex flex-col gap-[var(--space-4)] sm:flex-row sm:items-end sm:justify-between',\n        className\n      )}\n      {...props}\n    >\n      <div className=\"flex min-w-0 flex-col gap-[var(--space-2)]\">\n        <h1 className=\"text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[var(--tracking-tight)] text-[var(--color-text-primary)]\">\n          {title}\n        </h1>\n        {description ? (\n          <div className=\"text-[length:var(--text-base)] leading-[var(--leading-sm)] text-[var(--color-text-secondary)]\">\n            {description}\n          </div>\n        ) : null}\n      </div>\n      {action ? <div className=\"shrink-0\">{action}</div> : null}\n    </header>\n  );\n}\n\nexport { PageHeader };\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "lib/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:ui"
+}

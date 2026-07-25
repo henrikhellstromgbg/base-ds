@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scroll-area",
+  "title": "Scroll Area",
+  "description": "The base-ds scroll-area component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "clsx@^2.1.1",
+    "radix-ui@^1.6.7",
+    "tailwind-merge@^3.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/scroll-area.tsx",
+      "content": "'use client';\n\nimport * as React from 'react';\nimport { ScrollArea as ScrollAreaPrimitive } from 'radix-ui';\nimport { cn } from '@/lib/cn';\n\nfunction ScrollArea({ className, children, ...props }: React.ComponentProps<typeof ScrollAreaPrimitive.Root>) {\n  return (\n    <ScrollAreaPrimitive.Root className={cn('relative overflow-hidden', className)} {...props}>\n      <ScrollAreaPrimitive.Viewport className=\"size-full rounded-[inherit]\">{children}</ScrollAreaPrimitive.Viewport>\n      <ScrollBar />\n      <ScrollAreaPrimitive.Corner className=\"bg-[var(--color-surface-sunken)]\" />\n    </ScrollAreaPrimitive.Root>\n  );\n}\n\nfunction ScrollBar({ className, orientation = 'vertical', ...props }: React.ComponentProps<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>) {\n  return (\n    <ScrollAreaPrimitive.ScrollAreaScrollbar\n      orientation={orientation}\n      className={cn(\n        'flex touch-none select-none p-[var(--space-1)]',\n        'transition-colors duration-[var(--duration-fast)] ease-[var(--ease-out)]',\n        'data-[orientation=horizontal]:h-[var(--space-3)] data-[orientation=horizontal]:flex-col',\n        'data-[orientation=vertical]:h-full data-[orientation=vertical]:w-[var(--space-3)]',\n        className\n      )}\n      {...props}\n    >\n      <ScrollAreaPrimitive.ScrollAreaThumb className=\"relative flex-1 rounded-[var(--radius-full)] bg-[var(--color-border-strong)]\" />\n    </ScrollAreaPrimitive.ScrollAreaScrollbar>\n  );\n}\n\nexport { ScrollArea, ScrollBar };\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "lib/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:ui"
+}

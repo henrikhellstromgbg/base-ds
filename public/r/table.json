@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "table",
+  "title": "Table",
+  "description": "The base-ds table component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "clsx@^2.1.1",
+    "tailwind-merge@^3.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/table.tsx",
+      "content": "import * as React from 'react';\nimport { cn } from '@/lib/cn';\n\n// Table headers use sentence case (N1). th uses scope for a11y.\n\nconst Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(\n  ({ className, ...props }, ref) => (\n    <div className=\"w-full overflow-auto rounded-[var(--radius-md)] border border-[var(--color-border-subtle)]\">\n      <table ref={ref} className={cn('w-full caption-bottom text-[length:var(--text-sm)]', className)} {...props} />\n    </div>\n  )\n);\nTable.displayName = 'Table';\n\nconst TableHeader = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(\n  ({ className, ...props }, ref) => (\n    <thead ref={ref} className={cn('bg-[var(--color-surface-sunken)]', className)} {...props} />\n  )\n);\nTableHeader.displayName = 'TableHeader';\n\nconst TableBody = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(\n  ({ className, ...props }, ref) => (\n    <tbody ref={ref} className={cn('[&_tr:last-child]:border-0', className)} {...props} />\n  )\n);\nTableBody.displayName = 'TableBody';\n\nconst TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement>>(\n  ({ className, ...props }, ref) => (\n    <tr\n      ref={ref}\n      className={cn(\n        'border-b border-[var(--color-border-subtle)] transition-colors duration-[var(--duration-fast)]',\n        'hover:bg-[var(--color-surface-hover)] data-[state=selected]:bg-[var(--color-brand-subtle)]',\n        className\n      )}\n      {...props}\n    />\n  )\n);\nTableRow.displayName = 'TableRow';\n\nconst TableHead = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttributes<HTMLTableCellElement>>(\n  ({ className, scope = 'col', ...props }, ref) => (\n    <th\n      ref={ref}\n      scope={scope}\n      className={cn(\n        'h-11 px-4 text-left align-middle font-medium text-[var(--color-text-secondary)]',\n        className\n      )}\n      {...props}\n    />\n  )\n);\nTableHead.displayName = 'TableHead';\n\nconst TableCell = React.forwardRef<HTMLTableCellElement, React.TdHTMLAttributes<HTMLTableCellElement>>(\n  ({ className, ...props }, ref) => (\n    <td ref={ref} className={cn('px-4 py-3 align-middle text-[var(--color-text-primary)]', className)} {...props} />\n  )\n);\nTableCell.displayName = 'TableCell';\n\nexport { Table, TableHeader, TableBody, TableRow, TableHead, TableCell };\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "lib/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:ui"
+}

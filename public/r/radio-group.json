@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-group",
+  "title": "Radio Group",
+  "description": "The base-ds radio-group component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "clsx@^2.1.1",
+    "radix-ui@^1.6.7",
+    "tailwind-merge@^3.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/radio-group.tsx",
+      "content": "'use client';\n\nimport * as React from 'react';\nimport { RadioGroup as RadioGroupPrimitive } from 'radix-ui';\nimport { cn } from '@/lib/cn';\n\nfunction RadioGroup({ className, ...props }: React.ComponentProps<typeof RadioGroupPrimitive.Root>) {\n  return <RadioGroupPrimitive.Root className={cn('grid w-full gap-[var(--space-2)]', className)} {...props} />;\n}\n\nfunction RadioGroupItem({ className, ...props }: React.ComponentProps<typeof RadioGroupPrimitive.Item>) {\n  return (\n    <RadioGroupPrimitive.Item\n      className={cn(\n        'group inline-flex size-[var(--touch-target-min)] shrink-0 cursor-pointer items-center justify-center',\n        'rounded-[var(--radius-full)] disabled:cursor-not-allowed disabled:opacity-50',\n        className\n      )}\n      {...props}\n    >\n      <span\n        aria-hidden=\"true\"\n        className={cn(\n          'flex size-[var(--space-5)] items-center justify-center rounded-[var(--radius-full)]',\n          'border border-[var(--color-border-strong)] bg-[var(--color-surface)]',\n          'transition-colors duration-[var(--duration-fast)] ease-[var(--ease-out)]',\n          'group-hover:border-[var(--color-action)] group-active:bg-[var(--color-surface-active)]',\n          'group-data-[state=checked]:border-[var(--color-action)]',\n          'group-aria-invalid:border-[var(--color-status-error)]'\n        )}\n      >\n        <RadioGroupPrimitive.Indicator className=\"size-[var(--space-2)] rounded-[var(--radius-full)] bg-[var(--color-action)]\" />\n      </span>\n    </RadioGroupPrimitive.Item>\n  );\n}\n\nexport { RadioGroup, RadioGroupItem };\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "lib/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:ui"
+}

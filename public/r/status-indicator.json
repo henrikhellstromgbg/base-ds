@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "status-indicator",
+  "title": "Status Indicator",
+  "description": "The base-ds status-indicator component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "clsx@^2.1.1",
+    "tailwind-merge@^3.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/status-indicator.tsx",
+      "content": "// Light coloured-text status label, not a filled badge. Use Badge when the\n// status needs to read as a discrete chip; use StatusIndicator inside dense\n// lists and tables where a filled chip per row would be visual noise.\n//\n// Colour is always paired with the text label, so N9 holds. Error and review\n// use the darker --color-status-*-text tokens so the label clears the Lc 75\n// body-text tier; the lighter --color-status-* base tier is icon-only (Lc 45).\n\nimport * as React from 'react';\nimport { cn } from '@/lib/cn';\n\nexport type Status =\n  | 'active'\n  | 'paused'\n  | 'error'\n  | 'review'\n  | 'success'\n  | 'approved';\n\nexport interface StatusIndicatorProps extends React.HTMLAttributes<HTMLSpanElement> {\n  status: Status;\n  label: string;\n  count?: number;\n}\n\nconst statusText: Record<Status, string> = {\n  active: 'text-[var(--color-text-secondary)]',\n  paused: 'text-[var(--color-text-tertiary)]',\n  error: 'text-[var(--color-status-error-text)]',\n  review: 'text-[var(--color-status-error-text)]',\n  success: 'text-[var(--color-status-success-text)]',\n  approved: 'text-[var(--color-status-success-text)]',\n};\n\nfunction StatusIndicator({ status, label, count, className, ...props }: StatusIndicatorProps) {\n  return (\n    <span\n      className={cn(\n        'inline-flex items-center gap-1 text-[length:var(--text-sm)]',\n        statusText[status],\n        className\n      )}\n      {...props}\n    >\n      {count !== undefined && (\n        <span className=\"font-mono tabular-nums text-[length:var(--text-sm)]\">{count}</span>\n      )}\n      <span>{label}</span>\n    </span>\n  );\n}\n\nexport { StatusIndicator };\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "lib/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:ui"
+}

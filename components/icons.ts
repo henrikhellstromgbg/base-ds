@@ -2,9 +2,11 @@
 // Add re-exports here as needed; import icons from '@/components/icons'.
 export {
   Add,
+  ArrowDown,
   ArrowLeft,
   ArrowRight,
   Calendar,
+  CircleDash,
   Checkmark,
   CheckmarkFilled,
   ChevronDown,
@@ -23,6 +25,7 @@ export {
   OverflowMenuHorizontal,
   Search,
   Settings,
+  SidePanelOpen,
   TrashCan,
   Upload,
   User,

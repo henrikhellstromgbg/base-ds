@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "slider",
+  "title": "Slider",
+  "description": "The base-ds slider component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "clsx@^2.1.1",
+    "radix-ui@^1.6.7",
+    "tailwind-merge@^3.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/slider.tsx",
+      "content": "'use client';\n\nimport * as React from 'react';\nimport { Slider as SliderPrimitive } from 'radix-ui';\nimport { cn } from '@/lib/cn';\n\nfunction Slider({ className, defaultValue, value, min = 0, max = 100, ...props }: React.ComponentProps<typeof SliderPrimitive.Root>) {\n  const values = React.useMemo(\n    () => (Array.isArray(value) ? value : Array.isArray(defaultValue) ? defaultValue : [min]),\n    [defaultValue, min, value]\n  );\n\n  return (\n    <SliderPrimitive.Root\n      defaultValue={defaultValue}\n      value={value}\n      min={min}\n      max={max}\n      className={cn(\n        'relative flex w-full touch-none select-none items-center',\n        'data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50',\n        'data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-[var(--space-20)]',\n        'data-[orientation=vertical]:w-[var(--touch-target-min)] data-[orientation=vertical]:flex-col',\n        className\n      )}\n      {...props}\n    >\n      <SliderPrimitive.Track\n        className={cn(\n          'relative grow overflow-hidden rounded-[var(--radius-full)] bg-[var(--color-surface-sunken)]',\n          'data-[orientation=horizontal]:h-[var(--space-1)] data-[orientation=horizontal]:w-full',\n          'data-[orientation=vertical]:h-full data-[orientation=vertical]:w-[var(--space-1)]'\n        )}\n      >\n        <SliderPrimitive.Range className=\"absolute bg-[var(--color-action)] data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full\" />\n      </SliderPrimitive.Track>\n      {values.map((_, index) => (\n        <SliderPrimitive.Thumb\n          key={index}\n          className={cn(\n            'relative block size-[var(--touch-target-min)] shrink-0 cursor-pointer rounded-[var(--radius-full)] bg-transparent',\n            'after:absolute after:left-1/2 after:top-1/2 after:size-[var(--space-4)]',\n            'after:-translate-x-1/2 after:-translate-y-1/2 after:rounded-[var(--radius-full)]',\n            'after:border after:border-[var(--color-action)] after:bg-[var(--color-surface)] after:shadow-[var(--shadow-sm)]',\n            'after:transition-colors after:duration-[var(--duration-fast)]',\n            'hover:after:bg-[var(--color-surface-hover)] active:cursor-grabbing active:after:bg-[var(--color-surface-active)]',\n            'disabled:cursor-not-allowed'\n          )}\n        />\n      ))}\n    </SliderPrimitive.Root>\n  );\n}\n\nexport { Slider };\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "lib/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "direction",
+  "title": "Direction",
+  "description": "The base-ds direction component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "radix-ui@^1.6.7"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/direction.tsx",
+      "content": "'use client';\n\nimport * as React from 'react';\nimport { Direction } from 'radix-ui';\n\ntype DirectionProviderProps = React.ComponentProps<typeof Direction.DirectionProvider> & {\n  direction?: React.ComponentProps<typeof Direction.DirectionProvider>['dir'];\n};\n\nfunction DirectionProvider({ dir, direction, children }: DirectionProviderProps) {\n  return <Direction.DirectionProvider dir={direction ?? dir}>{children}</Direction.DirectionProvider>;\n}\n\nconst useDirection = Direction.useDirection;\n\nexport { DirectionProvider, useDirection };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

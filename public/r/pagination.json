@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pagination",
+  "title": "Pagination",
+  "description": "The base-ds pagination component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "@carbon/icons-react@^11.60.0",
+    "@radix-ui/react-slot@^1.1.2",
+    "class-variance-authority@^0.7.1",
+    "clsx@^2.1.1",
+    "tailwind-merge@^3.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/button.tsx",
+      "content": "'use client';\n\n// Reference component: this file establishes the pattern all components follow.\n// - cva for variants, cn() for merging\n// - semantic tokens only, via arbitrary-value classes bound to CSS vars\n// - all states: hover, focus-visible (global ring), active, disabled, loading\n// - min touch target 44px (A3)\n// - cursor-pointer is explicit (A14): Tailwind v4's preflight sets buttons to\n//   cursor: default, so every interactive component must opt back in\n\nimport * as React from 'react';\nimport { Slot, Slottable } from '@radix-ui/react-slot';\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport { cn } from '@/lib/cn';\n\nconst buttonVariants = cva(\n  [\n    'inline-flex items-center justify-center gap-2 whitespace-nowrap select-none',\n    'cursor-pointer rounded-[var(--radius-md)] font-medium',\n    'transition-colors duration-[var(--duration-fast)]',\n    'disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50',\n    'min-h-[var(--touch-target-min)]',\n    '[&_svg]:shrink-0',\n  ],\n  {\n    variants: {\n      variant: {\n        primary: [\n          'bg-[var(--color-action)] text-[var(--color-action-text)]',\n          'hover:bg-[var(--color-action-hover)]',\n          'active:opacity-90',\n        ],\n        secondary: [\n          'bg-[var(--color-surface)] text-[var(--color-text-primary)]',\n          'border border-[var(--color-border)]',\n          'hover:bg-[var(--color-surface-hover)]',\n          'active:bg-[var(--color-surface-active)]',\n        ],\n        ghost: [\n          'text-[var(--color-text-primary)]',\n          'hover:bg-[var(--color-surface-hover)]',\n          'active:bg-[var(--color-surface-active)]',\n        ],\n        destructive: [\n          'bg-[var(--color-status-error)] text-[var(--color-text-on-status)]',\n          'hover:opacity-90 active:opacity-80',\n        ],\n      },\n      size: {\n        sm: 'h-9 min-h-9 px-3 text-[length:var(--text-sm)]',\n        md: 'h-11 px-4 text-[length:var(--text-sm)]',\n        lg: 'h-12 px-6 text-[length:var(--text-base)]',\n        icon: 'h-11 w-11 p-0', // requires aria-label (A5)\n      },\n    },\n    defaultVariants: { variant: 'primary', size: 'md' },\n  }\n);\n\nexport interface ButtonProps\n  extends React.ButtonHTMLAttributes<HTMLButtonElement>,\n    VariantProps<typeof buttonVariants> {\n  asChild?: boolean;\n  loading?: boolean;\n}\n\nconst Button = React.forwardRef<HTMLButtonElement, ButtonProps>(\n  ({ className, variant, size, asChild = false, loading = false, disabled, children, ...props }, ref) => {\n    const Comp = asChild ? Slot : 'button';\n    return (\n      <Comp\n        className={cn(buttonVariants({ variant, size }), className)}\n        ref={ref}\n        disabled={disabled || loading}\n        aria-busy={loading || undefined}\n        {...props}\n      >\n        {loading && (\n          <span\n            aria-hidden=\"true\"\n            className=\"size-4 animate-spin rounded-full border-2 border-current border-t-transparent\"\n          />\n        )}\n        {/* Slottable marks which child Slot merges into when asChild, so the\n            loading sibling above no longer breaks the single-child rule. */}\n        <Slottable>{children}</Slottable>\n      </Comp>\n    );\n  }\n);\nButton.displayName = 'Button';\n\nexport { Button, buttonVariants };\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "node_modules/.cache/base-ds-registry/pagination/components/ui/pagination.tsx.source",
+      "content": "import * as React from 'react';\n\nimport { ChevronLeft, ChevronRight, OverflowMenuHorizontal } from '@/components/base-ds-icons/pagination';\nimport { Button } from '@/components/ui/button';\nimport { cn } from '@/lib/cn';\n\nfunction Pagination({ className, ...props }: React.ComponentProps<'nav'>) {\n  return (\n    <nav\n      aria-label=\"Pagination\"\n      data-slot=\"pagination\"\n      className={cn('mx-auto flex w-full justify-center', className)}\n      {...props}\n    />\n  );\n}\n\nfunction PaginationContent({ className, ...props }: React.ComponentProps<'ul'>) {\n  return (\n    <ul\n      data-slot=\"pagination-content\"\n      className={cn('flex items-center gap-[var(--space-1)]', className)}\n      {...props}\n    />\n  );\n}\n\nfunction PaginationItem(props: React.ComponentProps<'li'>) {\n  return <li data-slot=\"pagination-item\" {...props} />;\n}\n\ntype PaginationLinkProps = {\n  isActive?: boolean;\n} & Pick<React.ComponentProps<typeof Button>, 'size'> &\n  React.ComponentProps<'a'>;\n\nfunction PaginationLink({ className, isActive, size = 'icon', ...props }: PaginationLinkProps) {\n  return (\n    <Button asChild variant={isActive ? 'secondary' : 'ghost'} size={size}>\n      <a className={className} aria-current={isActive ? 'page' : undefined} data-slot=\"pagination-link\" data-active={isActive} {...props} />\n    </Button>\n  );\n}\n\nfunction PaginationPrevious({ className, text = 'Previous', ...props }: React.ComponentProps<typeof PaginationLink> & { text?: string }) {\n  return (\n    <PaginationLink aria-label=\"Go to previous page\" size=\"md\" className={cn('gap-[var(--space-2)]', className)} {...props}>\n      <ChevronLeft size={16} aria-hidden=\"true\" />\n      <span className=\"hidden sm:block\">{text}</span>\n    </PaginationLink>\n  );\n}\n\nfunction PaginationNext({ className, text = 'Next', ...props }: React.ComponentProps<typeof PaginationLink> & { text?: string }) {\n  return (\n    <PaginationLink aria-label=\"Go to next page\" size=\"md\" className={cn('gap-[var(--space-2)]', className)} {...props}>\n      <span className=\"hidden sm:block\">{text}</span>\n      <ChevronRight size={16} aria-hidden=\"true\" />\n    </PaginationLink>\n  );\n}\n\nfunction PaginationEllipsis({ className, ...props }: React.ComponentProps<'span'>) {\n  return (\n    <span\n      aria-hidden=\"true\"\n      data-slot=\"pagination-ellipsis\"\n      className={cn(\n        'flex min-h-[var(--touch-target-min)] min-w-[var(--touch-target-min)] items-center justify-center',\n        'text-[var(--color-text-tertiary)]',\n        className\n      )}\n      {...props}\n    >\n      <OverflowMenuHorizontal size={16} aria-hidden=\"true\" />\n      <span className=\"sr-only\">More pages</span>\n    </span>\n  );\n}\n\nexport { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious };\n",
+      "type": "registry:file",
+      "target": "components/ui/pagination.tsx"
+    },
+    {
+      "path": "lib/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    },
+    {
+      "path": "node_modules/.cache/base-ds-registry/pagination/icons.ts.source",
+      "content": "export {\n  ChevronLeft,\n  ChevronRight,\n  OverflowMenuHorizontal,\n} from '@carbon/icons-react';\n",
+      "type": "registry:file",
+      "target": "components/base-ds-icons/pagination.ts"
+    }
+  ],
+  "type": "registry:ui"
+}

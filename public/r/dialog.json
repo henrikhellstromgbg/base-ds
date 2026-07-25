@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dialog",
+  "title": "Dialog",
+  "description": "The base-ds dialog component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "@carbon/icons-react@^11.60.0",
+    "@radix-ui/react-dialog@^1.1.6",
+    "clsx@^2.1.1",
+    "tailwind-merge@^3.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "node_modules/.cache/base-ds-registry/dialog/components/ui/dialog.tsx.source",
+      "content": "'use client';\n\nimport * as React from 'react';\nimport * as DialogPrimitive from '@radix-ui/react-dialog';\nimport { Close } from '@/components/base-ds-icons/dialog';\nimport { cn } from '@/lib/cn';\n\n// Radix handles focus trap, focus return, and Escape (A12).\n// DialogContent requires a DialogTitle for screen reader context.\n\nconst Dialog = DialogPrimitive.Root;\nconst DialogTrigger = DialogPrimitive.Trigger;\nconst DialogClose = DialogPrimitive.Close;\n\nconst DialogContent = React.forwardRef<\n  React.ElementRef<typeof DialogPrimitive.Content>,\n  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>\n>(({ className, children, ...props }, ref) => (\n  <DialogPrimitive.Portal>\n    <DialogPrimitive.Overlay\n      className={cn(\n        'fixed inset-0 z-[var(--z-overlay)] bg-[var(--color-overlay)]',\n        'data-[state=open]:animate-in data-[state=open]:fade-in-0',\n        'data-[state=closed]:animate-out data-[state=closed]:fade-out-0'\n      )}\n    />\n    <DialogPrimitive.Content\n      ref={ref}\n      className={cn(\n        'fixed left-1/2 top-1/2 z-[var(--z-dialog)] w-full max-w-lg -translate-x-1/2 -translate-y-1/2',\n        'rounded-[var(--radius-lg)] bg-[var(--color-surface-raised)] p-[var(--space-6)] shadow-[var(--shadow-lg)]',\n        'duration-[var(--duration-slow)]',\n        'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',\n        'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',\n        className\n      )}\n      {...props}\n    >\n      {children}\n      <DialogPrimitive.Close\n        aria-label=\"Close\"\n        className={cn(\n          'absolute right-4 top-4 flex size-11 cursor-pointer items-center justify-center rounded-[var(--radius-sm)]',\n          'text-[var(--color-text-tertiary)] transition-colors duration-[var(--duration-fast)]',\n          'hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text-primary)]'\n        )}\n      >\n        <Close size={20} aria-hidden=\"true\" />\n      </DialogPrimitive.Close>\n    </DialogPrimitive.Content>\n  </DialogPrimitive.Portal>\n));\nDialogContent.displayName = 'DialogContent';\n\nconst DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (\n  <div className={cn('mb-[var(--space-4)] flex flex-col gap-1.5 pr-10', className)} {...props} />\n);\n\nconst DialogTitle = React.forwardRef<\n  React.ElementRef<typeof DialogPrimitive.Title>,\n  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>\n>(({ className, ...props }, ref) => (\n  <DialogPrimitive.Title\n    ref={ref}\n    className={cn('text-[length:var(--text-xl)] font-semibold leading-[var(--leading-md)] text-[var(--color-text-primary)]', className)}\n    {...props}\n  />\n));\nDialogTitle.displayName = 'DialogTitle';\n\nconst DialogDescription = React.forwardRef<\n  React.ElementRef<typeof DialogPrimitive.Description>,\n  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>\n>(({ className, ...props }, ref) => (\n  <DialogPrimitive.Description\n    ref={ref}\n    className={cn('text-[length:var(--text-sm)] text-[var(--color-text-secondary)]', className)}\n    {...props}\n  />\n));\nDialogDescription.displayName = 'DialogDescription';\n\nconst DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (\n  <div className={cn('mt-[var(--space-6)] flex justify-end gap-[var(--space-3)]', className)} {...props} />\n);\n\nexport { Dialog, DialogTrigger, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter };\n",
+      "type": "registry:file",
+      "target": "components/ui/dialog.tsx"
+    },
+    {
+      "path": "lib/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    },
+    {
+      "path": "node_modules/.cache/base-ds-registry/dialog/icons.ts.source",
+      "content": "export {\n  Close,\n} from '@carbon/icons-react';\n",
+      "type": "registry:file",
+      "target": "components/base-ds-icons/dialog.ts"
+    }
+  ],
+  "type": "registry:ui"
+}

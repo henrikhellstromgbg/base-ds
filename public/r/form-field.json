@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "form-field",
+  "title": "Form Field",
+  "description": "The base-ds form-field component, adapted to semantic tokens and Carbon icons.",
+  "dependencies": [
+    "@carbon/icons-react@^11.60.0",
+    "clsx@^2.1.1",
+    "tailwind-merge@^3.0.2"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/henrikhellstromgbg/base-ds/main/public/r/base-ds-tokens.json"
+  ],
+  "files": [
+    {
+      "path": "node_modules/.cache/base-ds-registry/form-field/components/ui/form-field.tsx.source",
+      "content": "'use client';\n\n// FormField wires label, hint, and error to the control with correct\n// htmlFor/id and aria-describedby (rules A4, N8, N9, A11).\n// Always use FormField for form inputs; never a bare <Input> with placeholder-as-label.\n\nimport * as React from 'react';\nimport { ErrorFilled } from '@/components/base-ds-icons/form-field';\nimport { cn } from '@/lib/cn';\n\n/* ---------- Label ---------- */\nconst Label = React.forwardRef<HTMLLabelElement, React.LabelHTMLAttributes<HTMLLabelElement>>(\n  ({ className, ...props }, ref) => (\n    <label\n      ref={ref}\n      className={cn(\n        'text-[length:var(--text-sm)] font-medium text-[var(--color-text-primary)]',\n        'peer-disabled:opacity-50',\n        className\n      )}\n      {...props}\n    />\n  )\n);\nLabel.displayName = 'Label';\n\n/* ---------- Input ---------- */\nexport interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {\n  invalid?: boolean;\n}\n\nconst Input = React.forwardRef<HTMLInputElement, InputProps>(\n  ({ className, invalid, type, ...props }, ref) => (\n    <input\n      type={type}\n      ref={ref}\n      {...props}\n      aria-invalid={invalid || props['aria-invalid'] || undefined}\n      className={cn(\n        'flex h-11 w-full rounded-[var(--radius-sm)] px-3',\n        'bg-[var(--color-surface)] text-[length:var(--text-sm)] text-[var(--color-text-primary)]',\n        'border border-[var(--color-border)]',\n        'placeholder:text-[var(--color-text-tertiary)]',\n        'transition-colors duration-[var(--duration-fast)]',\n        'hover:border-[var(--color-border-strong)]',\n        'disabled:cursor-not-allowed disabled:opacity-50',\n        invalid && 'border-[var(--color-status-error)]',\n        className\n      )}\n    />\n  )\n);\nInput.displayName = 'Input';\n\n/* ---------- Textarea ---------- */\nconst Textarea = React.forwardRef<\n  HTMLTextAreaElement,\n  React.TextareaHTMLAttributes<HTMLTextAreaElement> & { invalid?: boolean }\n>(({ className, invalid, ...props }, ref) => (\n  <textarea\n    ref={ref}\n    {...props}\n    aria-invalid={invalid || props['aria-invalid'] || undefined}\n    className={cn(\n      'flex min-h-24 w-full rounded-[var(--radius-sm)] px-3 py-2',\n      'bg-[var(--color-surface)] text-[length:var(--text-sm)] text-[var(--color-text-primary)]',\n      'border border-[var(--color-border)]',\n      'placeholder:text-[var(--color-text-tertiary)]',\n      'transition-colors duration-[var(--duration-fast)]',\n      'hover:border-[var(--color-border-strong)]',\n      'disabled:cursor-not-allowed disabled:opacity-50',\n      invalid && 'border-[var(--color-status-error)]',\n      className\n    )}\n  />\n));\nTextarea.displayName = 'Textarea';\n\n/* ---------- FormField ---------- */\nexport interface FormFieldProps {\n  label: string;\n  hint?: string;\n  error?: string;\n  required?: boolean;\n  children: React.ReactElement;\n  className?: string;\n}\n\nfunction FormField({ label, hint, error, required, children, className }: FormFieldProps) {\n  const id = React.useId();\n  const hintId = hint ? `${id}-hint` : undefined;\n  const errorId = error ? `${id}-error` : undefined;\n  const childProps = (children as React.ReactElement<Record<string, unknown>>).props;\n  const existingDescribedBy = childProps['aria-describedby'] as string | undefined;\n  const describedBy = [existingDescribedBy, hintId, errorId].filter(Boolean).join(' ') || undefined;\n\n  return (\n    <div className={cn('flex flex-col gap-[var(--space-2)]', className)}>\n      <Label htmlFor={id}>\n        {label}\n        {required && (\n          <span aria-hidden=\"true\" className=\"ml-1 text-[var(--color-status-error-text)]\">*</span>\n        )}\n      </Label>\n      {hint && (\n        <p id={hintId} className=\"text-[length:var(--text-sm)] text-[var(--color-text-tertiary)]\">\n          {hint}\n        </p>\n      )}\n      {React.cloneElement(children as React.ReactElement<Record<string, unknown>>, {\n        id,\n        'aria-describedby': describedBy,\n        invalid: Boolean(error) || undefined,\n        required: required || undefined,\n      })}\n      {error && (\n        <p\n          id={errorId}\n          role=\"alert\"\n          className=\"flex items-center gap-1.5 text-[length:var(--text-sm)] text-[var(--color-status-error-text)]\"\n        >\n          <ErrorFilled size={16} aria-hidden=\"true\" />\n          {error}\n        </p>\n      )}\n    </div>\n  );\n}\n\nexport { Label, Input, Textarea, FormField };\n",
+      "type": "registry:file",
+      "target": "components/ui/form-field.tsx"
+    },
+    {
+      "path": "lib/cn.ts",
+      "content": "import { clsx, type ClassValue } from 'clsx';\nimport { twMerge } from 'tailwind-merge';\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    },
+    {
+      "path": "node_modules/.cache/base-ds-registry/form-field/icons.ts.source",
+      "content": "export {\n  ErrorFilled,\n} from '@carbon/icons-react';\n",
+      "type": "registry:file",
+      "target": "components/base-ds-icons/form-field.ts"
+    }
+  ],
+  "type": "registry:ui"
+}
