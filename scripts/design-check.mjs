@@ -139,6 +139,13 @@ function classNamesFor(opening, declarations) {
   const walk = (node, depth) => {
     if (!node || depth > 4) return;
     if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) { parts.push(node.text); return; }
+    // `flex px-3 ${active ? a : b}` splits into head/middle/tail tokens, none of
+    // which is a StringLiteral. Without this the static half of every
+    // template-literal className is invisible to the matchers below.
+    if (ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) {
+      parts.push(node.text);
+      return;
+    }
     if (ts.isIdentifier(node)) {
       const declaration = declarations.get(node.text);
       if (declaration) walk(declaration, depth + 1);
@@ -201,12 +208,16 @@ const AST_RULES = [
         const opening = ts.isJsxElement(node) ? node.openingElement : undefined;
         if (opening) {
           const tag = opening.tagName.getText();
-          // Table rows and sections delegate padding to their cells, and
-          // full-bleed overlays have no text to hug.
+          // A capitalized tag is a system component; it owns its inner padding
+          // (A16) and its fixed box may live inside its own file, invisible here.
+          // Flagging it asks the view for padding it cannot add. Table rows and
+          // sections delegate padding to their cells, and full-bleed overlays
+          // have no text to hug.
+          const isComponent = /^[A-Z]/.test(tag);
           const isDelegating = /^(tr|thead|tbody|tfoot|table)$/.test(tag);
           const classes = classNamesFor(opening, declarations);
           const isOverlay = classes.includes('inset-0');
-          if (!isDelegating && !isOverlay && HUGGING_BG.test(classes)
+          if (!isComponent && !isDelegating && !isOverlay && HUGGING_BG.test(classes)
               && !PADDING.test(classes) && !FIXED_SQUARE.test(classes)) {
             hits.push({ node: opening });
           }
