@@ -232,7 +232,7 @@ const AST_RULES = [
     id: 'N15', desc: 'hand-built clickable element (use a system component)',
     // components/ui is where raw interactive elements are allowed to live.
     scope: (file) => !file.startsWith('components/ui/'),
-    check(sourceFile) {
+    check(sourceFile, { declarations }) {
       const hits = [];
       const visit = (node) => {
         const opening = ts.isJsxElement(node) ? node.openingElement
@@ -240,7 +240,12 @@ const AST_RULES = [
         if (opening) {
           const tag = opening.tagName.getText();
           const hasClick = jsxAttribute(opening, 'onClick') !== undefined;
-          if (tag === 'button' && jsxAttribute(opening, 'className')) hits.push({ node: opening });
+          // A full-bleed inset-0 element is a scrim or dismiss layer, not a
+          // content control, and there is no system component for it. A15 skips
+          // it for the same reason.
+          const isOverlay = classNamesFor(opening, declarations).includes('inset-0');
+          if (isOverlay) { /* dismiss scrim, not a hand-built control */ }
+          else if (tag === 'button' && jsxAttribute(opening, 'className')) hits.push({ node: opening });
           else if (hasClick && NON_INTERACTIVE_TAG.test(tag)) hits.push({ node: opening });
         }
         ts.forEachChild(node, visit);

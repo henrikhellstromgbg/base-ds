@@ -120,6 +120,12 @@ export function DataRow({ onPick }) {
 }
 `, 'components/ui'), 'N15 raw button is allowed inside components/ui');
 
+expectClean(runFixture(`
+export function Fixture({ onClose }) {
+  return <button type="button" aria-label="Close menu" onClick={onClose} className="fixed inset-0 z-30 cursor-pointer bg-[var(--color-overlay)]" />;
+}
+`), 'N15 full-bleed scrim button is a dismiss layer, not a content control');
+
 // ---- C1: sentence case ----------------------------------------------------
 
 expectRules(runFixture(`
