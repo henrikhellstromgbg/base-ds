@@ -170,8 +170,8 @@ const tokenItem = {
   description: 'The immutable base-ds primitive and semantic tokens, merged into the project stylesheet without replacing its global styles.',
   files: tokenFiles.map(registryFile),
   css: {
-    '@import "@/tokens/primitives.css"': {},
-    '@import "@/tokens/semantic.css"': {},
+    '@import "../tokens/primitives.css"': {},
+    '@import "../tokens/semantic.css"': {},
   },
 };
 

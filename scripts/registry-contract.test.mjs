@@ -7,7 +7,16 @@ import ts from 'typescript';
 const repoRoot = dirname(dirname(fileURLToPath(import.meta.url)));
 const uiRoot = join(repoRoot, 'components/ui');
 const registry = JSON.parse(readFileSync(join(repoRoot, 'design-system/registry.json'), 'utf8'));
+const shadcnRegistry = JSON.parse(readFileSync(join(repoRoot, 'registry.json'), 'utf8'));
 const entries = [...registry.components, ...registry.patterns];
+
+const tokenItem = shadcnRegistry.items.find((item) => item.name === 'base-ds-tokens');
+assert.ok(tokenItem, 'The generated shadcn registry must include base-ds-tokens.');
+assert.deepEqual(
+  Object.keys(tokenItem.css ?? {}),
+  ['@import "../tokens/primitives.css"', '@import "../tokens/semantic.css"'],
+  'Token imports must resolve relative to app/globals.css; TypeScript path aliases are not resolved by PostCSS.',
+);
 
 function sortedUnique(values) {
   return [...new Set(values)].sort();
