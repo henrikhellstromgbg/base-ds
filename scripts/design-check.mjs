@@ -305,6 +305,7 @@ function copyProblem(text) {
 }
 
 const violations = [];
+const exemptions = [];
 
 function buildDeclarations(sourceFile) {
   const declarations = new Map();
@@ -389,6 +390,40 @@ function collectConstantValues(sourceFile) {
   return results;
 }
 
+// ---------------------------------------------------------------------------
+// Exemptions. A rule that cannot be followed is declared in the file, with a
+// reason, and reported in the summary. Never by editing this checker: a hard
+// coded skip list is invisible, and invisible exemptions never get revisited.
+//
+//   /* design-check-exempt: reason */   in the first 10 lines  -> whole file
+//   /* design-check-exempt: reason */   anywhere else          -> that line
+//                                                                 and the next
+// ---------------------------------------------------------------------------
+
+const EXEMPT_DIRECTIVE = /design-check-exempt:([^*\n]*)/;
+const FILE_EXEMPT_LINES = 10;
+
+function readExemptions(file, lines) {
+  const fileLevel = [];
+  const byLine = new Map();
+  const malformed = [];
+
+  lines.forEach((text, index) => {
+    const match = EXEMPT_DIRECTIVE.exec(text);
+    if (!match) return;
+    const lineNo = index + 1;
+    const reason = match[1].replace(/\*\/.*$/, '').trim();
+    if (!reason) {
+      malformed.push({ file, line: lineNo, rule: 'EXEMPT', desc: 'design-check-exempt needs a reason', snippet: text.trim().slice(0, 80) });
+      return;
+    }
+    if (lineNo <= FILE_EXEMPT_LINES) fileLevel.push({ file, line: lineNo, reason, scope: 'file' });
+    else byLine.set(lineNo, { file, line: lineNo, reason, scope: 'line' });
+  });
+
+  return { fileLevel, byLine, malformed };
+}
+
 function scan(dir) {
   let entries;
   try { entries = readdirSync(dir); } catch { return; }
@@ -403,25 +438,34 @@ function scan(dir) {
     const raw = readFileSync(full, 'utf8');
     const src = maskComments(raw, entry.endsWith('.css'));
     const lines = raw.split('\n');
+    const file = relative(process.cwd(), full);
+
+    // Read from the raw source: maskComments has already blanked the reason.
+    const exempt = readExemptions(file, lines);
+    exemptions.push(...exempt.fileLevel, ...exempt.byLine.values());
+    violations.push(...exempt.malformed);
+    const isExempt = (lineNo) =>
+      exempt.fileLevel.length > 0 || exempt.byLine.has(lineNo) || exempt.byLine.has(lineNo - 1);
+    const report = (v) => { if (!isExempt(v.line)) violations.push(v); };
+
     for (const rule of RULES) {
       for (const m of rule.test(src)) {
         const lineNo = src.slice(0, m.index).split('\n').length;
         const line = lines[lineNo - 1] ?? '';
         if (rule.filter && !rule.filter(line)) continue;
-        violations.push({ file: relative(process.cwd(), full), line: lineNo, rule: rule.id, desc: rule.desc, snippet: line.trim().slice(0, 80) });
+        report({ file, line: lineNo, rule: rule.id, desc: rule.desc, snippet: line.trim().slice(0, 80) });
       }
     }
 
     if (!entry.endsWith('.css')) {
       const sourceFile = ts.createSourceFile(full, raw, ts.ScriptTarget.Latest, true, entry.endsWith('x') ? ts.ScriptKind.TSX : ts.ScriptKind.TS);
-      const file = relative(process.cwd(), full);
       const declarations = buildDeclarations(sourceFile);
       for (const rule of AST_RULES) {
         if (rule.scope && !rule.scope(file)) continue;
         for (const { node } of rule.check(sourceFile, { declarations, file })) {
           const lineNo = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1;
           const line = lines[lineNo - 1] ?? '';
-          violations.push({ file, line: lineNo, rule: rule.id, desc: rule.desc, snippet: line.trim().slice(0, 80) });
+          report({ file, line: lineNo, rule: rule.id, desc: rule.desc, snippet: line.trim().slice(0, 80) });
         }
       }
       for (const { value, node } of collectConstantValues(sourceFile)) {
@@ -429,7 +473,7 @@ function scan(dir) {
           if (rule.test(value).length === 0) continue;
           const lineNo = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1;
           const line = lines[lineNo - 1] ?? '';
-          violations.push({ file: relative(process.cwd(), full), line: lineNo, rule: rule.id, desc: rule.desc, snippet: line.trim().slice(0, 80) });
+          report({ file, line: lineNo, rule: rule.id, desc: rule.desc, snippet: line.trim().slice(0, 80) });
         }
       }
     }
@@ -438,8 +482,20 @@ function scan(dir) {
 
 for (const root of ROOTS) scan(join(process.cwd(), root));
 
+// Exemptions are printed on every run, pass or fail. An exemption nobody sees
+// is the same thing as no rule at all.
+function printExemptions() {
+  if (exemptions.length === 0) return;
+  console.log(`\ndesign-check: ${exemptions.length} exemption(s)`);
+  for (const e of exemptions) {
+    const where = e.scope === 'file' ? `${e.file} (whole file)` : `${e.file}:${e.line}`;
+    console.log(`  ${where}  ${e.reason}`);
+  }
+}
+
 if (violations.length === 0) {
   console.log('design-check: all [lint] rules pass.');
+  printExemptions();
   process.exit(0);
 }
 
@@ -449,4 +505,5 @@ for (const v of violations) {
   console.error(`      ${v.snippet}`);
 }
 console.error('\nSee design-rules/RULES.md for the full rule text.');
+printExemptions();
 process.exit(1);

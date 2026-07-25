@@ -58,3 +58,4 @@ number. Done. It is immediately active in Claude Code, Codex, and reviews.
 - P2: New components go through the new-component skill: check composability first, build in `components/ui/`, add to examples, sync back to base-ds if generally useful
 - P3: Before marking any view as done, run the design-review skill checklist and `npm run design-check`
 - P4: Views are built ONLY from `components/ui/` plus layout primitives (div/flex/grid with token-based spacing)
+- P5: A rule that genuinely cannot be followed is exempted in the file, never by editing the checker. Put `/* design-check-exempt: <reason> */` in the first 10 lines to exempt the whole file, or directly above the line to exempt that line. The reason is mandatory, and `design-check` prints every exemption on every run. If a hardcoded skip list appears in `scripts/design-check.mjs`, that is the bug

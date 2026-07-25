@@ -141,4 +141,29 @@ export function Fixture({ name }) {
 }
 `), 'C1 sentence case, acronym, proper noun, interpolation, and OK');
 
+// ---- Exemptions -----------------------------------------------------------
+
+const fileExempt = runFixture(`/* design-check-exempt: email clients cannot resolve CSS custom properties */
+export function Fixture() { return <div style={{ color: '#aabbcc' }} className="text-xs" />; }
+`);
+expectClean(fileExempt, 'exempt: whole file');
+if (!fileExempt.stdout.includes('1 exemption(s)') || !fileExempt.stdout.includes('email clients')) {
+  console.error(fileExempt.stdout);
+  throw new Error('exempt: the summary must name the file and its reason.');
+}
+
+expectClean(runFixture(`
+export function Fixture() {
+  /* design-check-exempt: third party embed ships this hex */
+  return <div style={{ color: '#aabbcc' }} />;
+}
+`), 'exempt: the line after the directive');
+
+expectRules(runFixture(`
+export function Fixture() {
+  /* design-check-exempt: */
+  return <div style={{ color: '#aabbcc' }} />;
+}
+`), ['EXEMPT', 'N4'], 'exempt: a reason is mandatory, and an empty one suppresses nothing');
+
 console.log('design-check regression fixtures pass.');

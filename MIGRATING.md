@@ -3,6 +3,42 @@
 One section per breaking change, newest first. If a project adopted base-ds
 before a change listed here, apply the section.
 
+## 1.2.0: exemptions replace skip lists
+
+`design-check` used to be edited when a file could not follow the rules. Trove
+carried this:
+
+```js
+const SKIP_FILES = new Set(['lib/pipelines/email.ts']);
+```
+
+That works and it is invisible. Nobody reviewing `email.ts` sees it, nobody
+revisits it, and the next exemption gets added the same way until the checker
+has a private policy nobody agreed to.
+
+Exemptions now live in the file that needs them, with a reason, and every run
+prints them. Replace a skip list entry with a directive at the top of the file
+it named:
+
+```ts
+/* design-check-exempt: email clients do not support CSS custom properties or
+   rem units, so the token system cannot reach this file */
+```
+
+Then delete the `SKIP_FILES` set and its `continue` from the project's copy of
+`scripts/design-check.mjs`, or just take the current base-ds version of that
+file, which is the better move.
+
+For a single line, put the directive directly above it:
+
+```tsx
+{/* design-check-exempt: the embed vendor hardcodes this hex */}
+<div style={{ borderColor: '#d5d5d5' }} />
+```
+
+A directive without a reason is itself a violation, so this cannot decay into
+a silent mute.
+
 ## 1.2.0: primary → action, accent → brand
 
 ### Why
