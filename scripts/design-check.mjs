@@ -21,6 +21,9 @@ const COMPONENT_ROOTS = [registry.surfaces.componentRoot, `src/${registry.surfac
 const UI_ENTRYPOINTS = new Map(
   [...registry.components, ...registry.patterns].map((component) => [component.entrypoint, component]),
 );
+const UI_EXPORTS = new Set(
+  [...registry.components, ...registry.patterns].flatMap((component) => component.exports),
+);
 const SYSTEM_OWNED_CLASS_NAMES = new Set(
   [...registry.components, ...registry.patterns]
     .filter((component) => component.classNamePolicy === 'system-owned')
@@ -198,6 +201,22 @@ function containsJsx(node) {
   return found;
 }
 
+function containsIntrinsicJsx(node) {
+  let found = false;
+  const visit = (child) => {
+    if (found) return;
+    const opening = ts.isJsxElement(child) ? child.openingElement
+      : ts.isJsxSelfClosingElement(child) ? child : undefined;
+    if (opening && /^[a-z]/.test(opening.tagName.getText())) {
+      found = true;
+      return;
+    }
+    ts.forEachChild(child, visit);
+  };
+  visit(node);
+  return found;
+}
+
 function hasModifier(node, kind) {
   return node.modifiers?.some((modifier) => modifier.kind === kind) ?? false;
 }
@@ -249,14 +268,17 @@ const AST_RULES = [
           const statement = node.parent?.parent;
           isDefault = statement ? hasModifier(statement, ts.SyntaxKind.DefaultKeyword) : false;
         }
+        const statement = ts.isVariableDeclaration(node) ? node.parent?.parent : node;
+        const isExported = statement ? hasModifier(statement, ts.SyntaxKind.ExportKeyword) : false;
         if (name && /^[A-Z]/.test(name) && body && containsJsx(body)) {
-          candidates.push({ node, name, isDefault });
+          candidates.push({ node, name, isDefault, isExported, hasIntrinsicJsx: containsIntrinsicJsx(body) });
         }
         ts.forEachChild(node, visit);
       };
       visit(sourceFile);
       return candidates
         .filter((candidate) => candidate.name !== allowedName && !candidate.isDefault)
+        .filter((candidate) => !candidate.isExported || candidate.hasIntrinsicJsx)
         .map(({ node }) => ({ node }));
     },
   },
@@ -267,7 +289,15 @@ const AST_RULES = [
       for (const statement of sourceFile.statements) {
         if (!ts.isImportDeclaration(statement)) continue;
         const entrypoint = uiEntrypoint(moduleName(statement));
-        if (entrypoint !== undefined && (!entrypoint || !UI_ENTRYPOINTS.has(entrypoint))) hits.push({ node: statement });
+        if (entrypoint === undefined) continue;
+        if (entrypoint) {
+          if (!UI_ENTRYPOINTS.has(entrypoint)) hits.push({ node: statement });
+          continue;
+        }
+        const bindings = statement.importClause?.namedBindings;
+        const validBarrelImport = bindings && ts.isNamedImports(bindings)
+          && bindings.elements.every((element) => UI_EXPORTS.has(element.propertyName?.text ?? element.name.text));
+        if (!validBarrelImport) hits.push({ node: statement });
       }
       return hits;
     },
@@ -314,7 +344,7 @@ const AST_RULES = [
       for (const statement of sourceFile.statements) {
         if (!ts.isImportDeclaration(statement)) continue;
         const entrypoint = uiEntrypoint(moduleName(statement));
-        if (!entrypoint || !UI_ENTRYPOINTS.has(entrypoint)) continue;
+        if (entrypoint === undefined || (entrypoint && !UI_ENTRYPOINTS.has(entrypoint))) continue;
         for (const element of statement.importClause?.namedBindings?.elements ?? []) {
           const importedName = element.propertyName?.text ?? element.name.text;
           if (SYSTEM_OWNED_CLASS_NAMES.has(importedName)) protectedNames.add(element.name.text);

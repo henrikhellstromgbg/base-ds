@@ -22,7 +22,17 @@ export interface AlertDialogProps {
   className?: string;
 }
 
-type AlertDialogRootProps = React.ComponentProps<typeof AlertDialogPrimitive.Root>;
+type AlertDialogRootProps = React.ComponentProps<typeof AlertDialogPrimitive.Root> & {
+  title?: never;
+  description?: never;
+  confirmLabel?: never;
+  cancelLabel?: never;
+  destructive?: never;
+  confirmDisabled?: never;
+  onConfirm?: never;
+  onCancel?: never;
+  className?: never;
+};
 
 const AlertDialogTrigger = AlertDialogPrimitive.Trigger;
 
@@ -211,9 +221,7 @@ function isConvenienceProps(props: AlertDialogProps | AlertDialogRootProps): pro
   return 'title' in props && 'onConfirm' in props && 'onCancel' in props;
 }
 
-function AlertDialog(props: AlertDialogProps): React.ReactElement;
-function AlertDialog(props: AlertDialogRootProps): React.ReactElement;
-function AlertDialog(props: AlertDialogProps | AlertDialogRootProps) {
+function AlertDialog(props: AlertDialogProps | AlertDialogRootProps): React.ReactElement {
   if (isConvenienceProps(props)) return <ControlledAlertDialog {...props} />;
   return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />;
 }

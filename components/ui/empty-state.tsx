@@ -4,24 +4,42 @@ import { cn } from '@/lib/cn';
 // Empty states are an invitation to act: icon, one-line explanation, one action.
 // Copy rules: sentence case, plain verbs, no mood-only messaging (A11).
 
-export interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
+interface EmptyStateBaseProps extends React.HTMLAttributes<HTMLDivElement> {
   icon?: React.ReactNode;
-  title: string;
   description?: string;
   action?: React.ReactNode;
 }
 
-function EmptyState({ icon, title, description, action, className, ...props }: EmptyStateProps) {
+export type EmptyStateProps = EmptyStateBaseProps & (
+  | { title: string; message?: never }
+  | { message: string; title?: never }
+);
+
+function EmptyState({ icon, title, message, description, action, className, ...props }: EmptyStateProps) {
+  const compact = message !== undefined;
+  const primaryText = title ?? message;
+
   return (
     <div
       className={cn(
-        'flex flex-col items-center justify-center gap-[var(--space-3)] p-[var(--space-12)] text-center',
+        'flex flex-col gap-[var(--space-3)]',
+        compact
+          ? 'items-start text-left'
+          : 'items-center justify-center p-[var(--space-12)] text-center',
         className
       )}
       {...props}
     >
       {icon && <div aria-hidden="true" className="text-[var(--color-text-tertiary)]">{icon}</div>}
-      <p className="text-[length:var(--text-lg)] font-semibold text-[var(--color-text-primary)]">{title}</p>
+      <p
+        className={cn(
+          compact
+            ? 'text-[length:var(--text-sm)] text-[var(--color-text-secondary)]'
+            : 'text-[length:var(--text-lg)] font-semibold text-[var(--color-text-primary)]'
+        )}
+      >
+        {primaryText}
+      </p>
       {description && (
         <p className="max-w-sm text-[length:var(--text-sm)] text-[var(--color-text-secondary)]">{description}</p>
       )}

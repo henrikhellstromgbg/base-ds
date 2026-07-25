@@ -151,10 +151,28 @@ function InventedPanel() { return <section>Details</section>; }
 export default () => <InventedPanel />;
 `), ['N5'], 'N5 invention beside anonymous default page');
 
+expectClean(runFixture(`
+export function DeleteProjectButton() { return <Button>Delete project</Button>; }
+`), 'N5 exported feature component in its own module');
+
+expectRules(runFixture(`
+export function InventedPanel() { return <section>Details</section>; }
+`), ['N5'], 'N5 exported component cannot bypass invention rule when it owns DOM');
+
 expectRules(runFixture(`
 import { Button } from '@/components/ui/not-in-registry';
 export function Fixture() { return <Button>Save changes</Button>; }
 `), ['I1'], 'I1 unapproved component entrypoint');
+
+expectClean(runFixture(`
+import { Button, EmptyState } from '@/components/ui';
+export function Fixture() { return <><Button>Save changes</Button><EmptyState title="No items" /></>; }
+`), 'I1 registered exports through a project UI barrel');
+
+expectRules(runFixture(`
+import { Button, InventedPanel } from '@/components/ui';
+export function Fixture() { return <><Button>Save changes</Button><InventedPanel /></>; }
+`), ['I1'], 'I1 unknown export through a project UI barrel');
 
 expectRules(runFixture(`
 import { Camera } from 'lucide-react';
