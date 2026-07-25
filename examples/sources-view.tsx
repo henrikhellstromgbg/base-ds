@@ -62,6 +62,17 @@ export default function SourcesView() {
 
       <Tabs items={tabs} activeKey={activeTab} label="Source status" onSelect={setActiveTab} />
 
+      <div className="flex items-center gap-[var(--space-4)]" aria-label="Source status summary">
+        {sources.map((source) => (
+          <StatusIndicator
+            key={source.id}
+            status={source.status}
+            label={source.statusLabel}
+            count={source.items}
+          />
+        ))}
+      </div>
+
       {activeTab === 'connected' ? (
         <div id="panel-connected" role="tabpanel" aria-labelledby="tab-connected" className="flex flex-col gap-[var(--space-8)]">
           <Card>
@@ -138,22 +149,5 @@ export default function SourcesView() {
         onCancel={() => setPendingRemoval(undefined)}
       />
     </main>
-  );
-}
-
-// Status summary strip, kept out of the main view to show StatusIndicator on
-// its own: colour is always paired with the label, never carrying meaning alone.
-export function SourceStatusSummary() {
-  return (
-    <div className="flex items-center gap-[var(--space-4)]">
-      {sources.map((source) => (
-        <StatusIndicator
-          key={source.id}
-          status={source.status}
-          label={source.statusLabel}
-          count={source.items}
-        />
-      ))}
-    </div>
   );
 }

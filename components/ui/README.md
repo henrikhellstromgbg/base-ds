@@ -36,9 +36,9 @@ source" section in the root README.md.
 | Component | Status | Notes |
 |---|---|---|
 | Card | done | |
-| PageFrame | todo | Centered page column, gutters and rhythm. Source material: Trove's `page-frame.tsx` |
-| PageHeader | todo | Title, description, action slot. Source material: Trove's `page-header.tsx` |
-| SectionHeader | todo | Section title plus action slot. Source material: Trove's `section-header.tsx` |
+| PageFrame | done | Centered page column with standard gutters, width, and vertical rhythm |
+| PageHeader | done | Page title, optional description, and action slot |
+| SectionHeader | done | Section title and optional action slot |
 | Separator | todo | Radix Separator |
 | AspectRatio | todo | Radix AspectRatio |
 | ScrollArea | todo | Radix ScrollArea |
@@ -82,6 +82,7 @@ source" section in the root README.md.
 | Spinner | todo | extract from Button loading state |
 | Skeleton | done | |
 | EmptyState | done | custom |
+| AsyncState | done | Required loading, error, empty, and ready content slots |
 | StatusIndicator | done | Coloured-text status label for dense rows. Badge is the chip version |
 
 ## Data

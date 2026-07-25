@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { CheckmarkFilled, ErrorFilled, InformationFilled, WarningFilled } from '@carbon/icons-react';
+import { CheckmarkFilled, ErrorFilled, InformationFilled, WarningFilled } from '@/components/icons';
 import { cn } from '@/lib/cn';
 
 // Inline alert / banner. Color always paired with icon and text (N9).

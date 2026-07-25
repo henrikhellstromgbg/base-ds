@@ -21,7 +21,8 @@ npm run contrast-check
 npm run build
 ```
 
-The copy includes CLAUDE.md, AGENTS.md, RULES.md, skills, and scripts, so
+The copy includes CLAUDE.md, AGENTS.md, the machine-readable registry,
+RULES.md, skills for both `.claude/` and `.codex/`, and the check scripts, so
 Claude Code and Codex are constrained from the first prompt.
 
 ### 2. Existing project with an established design
@@ -29,12 +30,14 @@ Claude Code and Codex are constrained from the first prompt.
 The project already has a look you want to keep. Adopt the system, capture the
 current brand into tokens, then migrate incrementally without visual drift.
 `adopt.sh` installs base-ds without overwriting anything: it copies tokens,
-RULES.md, skills, MIGRATING.md, and the checks, adds the npm scripts, and
-appends a base-ds section to CLAUDE.md/AGENTS.md. Existing files are skipped
-and reported.
+the registry, the component inventory, RULES.md, skills into both `.claude/`
+and `.codex/`, MIGRATING.md, and the checks. It also adds missing npm scripts
+and appends a base-ds section to CLAUDE.md/AGENTS.md. Existing files are
+skipped and reported.
 
-`adopt.sh` deliberately installs no components. A project being retrofitted
-already has its own, and overwriting them would break every view at once
+`adopt.sh` deliberately installs no component source. It installs
+`components/ui/README.md` only as the inventory. A project being retrofitted
+already has its own components, and overwriting them would break every view at once
 instead of one at a time. Phase 3 is where components arrive: copy the ones a
 view needs from base-ds `components/ui/` by hand as you migrate that view, and
 retire the project's equivalent when the last caller is gone. The inventory in
@@ -90,6 +93,7 @@ and that draft becomes the active tokens/theme.css.
 
 | Command | What it does |
 |---|---|
+| `npm test` | Run design-check regressions and the adoption smoke test |
 | `npm run design-check` | Machine check of all `[lint]` rules in RULES.md |
 | `npm run contrast-check` | APCA verification of 46 rendered theme-brand pairs |
 | `npm run verify-scales` | Verify the full rendered APCA matrix, parsed from primitives.css and semantic.css |
@@ -104,10 +108,11 @@ If the rule is mechanically checkable, also add a matcher in
 
 ## Add a component
 
-Use the new-component skill in Claude Code ("add a Select component to the
-design system"). It follows the gates: composition check, approval, build to
-standard, verify, document in `components/ui/README.md`. Generally useful
-components get copied back here so all future projects inherit them.
+Use the new-component skill in Claude Code or Codex ("add a Select component
+to the design system"). It follows the gates: composition check, approval,
+build to standard, verify, document in `components/ui/README.md`, and update
+`design-system/registry.json`. Generally useful components get copied back
+here so all future projects inherit them.
 
 ### Where components come from
 
@@ -131,10 +136,12 @@ version already solved the accessibility and composition work.
 tokens/primitives.css   raw OKLCH values (APCA-verified) — never edited in projects
 tokens/semantic.css     --color-* layer, light + dark — never edited in projects
 tokens/theme.css        per-project brand — the ONLY file that varies
+design-system/registry.json  machine contract for supported components and patterns
 components/ui/          the library (inventory in its README.md)
 components/icons.ts     Carbon icon barrel — the only icon import path
 design-rules/RULES.md   all rules, single source of truth
 .claude/skills/         design-review, new-component, a11y-audit, ux-patterns
+.codex/skills/          the same skills, discoverable by Codex
 scripts/                design-check, contrast-check, new-project, adopt
 tools/                  color scale generator with APCA verification
 examples/               reference views showing correct composition

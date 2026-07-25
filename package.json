@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "node --test scripts/design-check.test.mjs scripts/adopt.test.mjs",
     "design-check": "node scripts/design-check.mjs",
     "test:design-check": "node scripts/design-check.test.mjs",
     "contrast-check": "node scripts/contrast-check.mjs",

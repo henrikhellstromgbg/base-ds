@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Usage: ./scripts/adopt.sh /path/to/existing-project
-# Retrofits base-ds into an EXISTING project: tokens, RULES.md, skills, checks.
+# Retrofits base-ds into an EXISTING project: tokens, registry, inventory,
+# RULES.md, skills, and checks.
 # Never overwrites existing files (skips and warns). Appends a marked section to
 # CLAUDE.md/AGENTS.md instead of replacing them. Idempotent: safe to run twice.
 set -euo pipefail
@@ -23,16 +24,21 @@ FILES=(
   "tokens/primitives.css"
   "tokens/semantic.css"
   "tokens/theme.css"
+  "design-system/registry.json"
   "design-rules/RULES.md"
+  "components/ui/README.md"
   "scripts/design-check.mjs"
   "scripts/contrast-check.mjs"
   "tools/generate-scales.mjs"
   "MIGRATING.md"
 )
-# All skill files (design-review, new-component, a11y-audit, ux-patterns).
-while IFS= read -r f; do
-  FILES+=("${f#"$SRC"/}")
-done < <(find "$SRC/.claude/skills" -type f | sort)
+# Install every supported agent skill surface. Each destination remains
+# independently user-owned: an existing Claude or Codex skill is never replaced.
+for skill_root in ".claude/skills" ".codex/skills"; do
+  while IFS= read -r f; do
+    FILES+=("${f#"$SRC"/}")
+  done < <(find "$SRC/$skill_root" -type f | sort)
+done
 
 COPIED=()
 SKIPPED=()
@@ -129,9 +135,11 @@ append_section() {
 This project uses base-ds for its UI. The design decisions are already made;
 your job is composition, not invention.
 
+- Machine contract: `design-system/registry.json` (supported components and patterns).
 - Constraints: `design-rules/RULES.md` (numbered rules, single source of truth).
-- Components: `components/ui/README.md` (the component inventory).
-- Patterns: `.claude/skills/ux-patterns/SKILL.md` (which surface, which control).
+- Components: `components/ui/README.md` (the human-readable inventory).
+- Patterns: `.claude/skills/ux-patterns/SKILL.md` for Claude Code and
+  `.codex/skills/ux-patterns/SKILL.md` for Codex (which surface, which control).
 - Checks: `npm run design-check`, `npm run contrast-check`, `npm run verify-scales`.
 - Upgrades: `MIGRATING.md` (one section per breaking change in base-ds).
 
@@ -140,8 +148,9 @@ component and RULES.md for constraints. If neither covers the case, stop and
 ask instead of inventing.
 
 Before building any new view, flow, or overlay, and before adding any form,
-read the ux-patterns skill. RULES.md governs how UI looks; ux-patterns governs
-what shape it takes. Same standing as the stop-and-ask rule above.
+read the ux-patterns skill for the agent you are using. RULES.md governs how UI
+looks; ux-patterns governs what shape it takes. Same standing as the
+stop-and-ask rule above.
 <!-- /base-ds:adopt -->
 EOF
   DOC_RESULT+=("$file: base-ds section $verb")

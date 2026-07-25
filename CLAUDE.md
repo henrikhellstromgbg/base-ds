@@ -15,6 +15,10 @@ Before styling any new UI, check components/ui/README.md for an existing
 component and RULES.md for constraints. If neither covers the case, stop and
 ask instead of inventing.
 
+`design-system/registry.json` is the machine-readable source of truth for
+supported components, page patterns, and their allowed import surfaces. Keep
+it synchronized when the component inventory changes.
+
 Before building any new view, flow, or overlay, and before adding any form,
 read the ux-patterns skill (`.claude/skills/ux-patterns/SKILL.md`). It decides
 which surface a thing belongs on and which control fits the data. This carries
@@ -26,6 +30,7 @@ look, ux-patterns says what shape it should take.
 - `tokens/primitives.css` — raw OKLCH values, APCA-verified. Never edit, never reference from components.
 - `tokens/semantic.css` — the only color layer components may use (`--color-*`). Never edit in a project.
 - `tokens/theme.css` — project brand overrides. The ONLY token file that differs between projects.
+- `design-system/registry.json` — machine-readable contract for supported components and page patterns.
 - `components/ui/` — the complete component library. Views are built from these and nothing else.
 - `components/icons.ts` — re-exports from `@carbon/icons-react`. Import icons from here.
 - `examples/` — correctly built reference views. When unsure how something should look, look here first.
@@ -36,15 +41,17 @@ look, ux-patterns says what shape it should take.
 1. Read RULES.md (via the import above).
 2. For a new view, flow, overlay, or form: read the ux-patterns skill and pick the surface and controls from it before writing any markup.
 3. Check `components/ui/` and `examples/` for existing patterns.
-4. Build views by composing existing components. Layout with div/flex/grid using `--space-*` tokens.
-5. Before declaring done: run `npm run design-check`. Fix every violation.
-6. If you changed or added any color pairing: run `npm run contrast-check`.
-7. For a full review, use the design-review skill.
+4. Confirm the component or pattern is registered in `design-system/registry.json`.
+5. Build views by composing existing components. Layout with div/flex/grid using `--space-*` tokens.
+6. Before declaring done: run `npm run design-check`. Fix every violation.
+7. If you changed or added any color pairing: run `npm run contrast-check`.
+8. For a full review, use the design-review skill.
 
 ## Verification commands
 
 - `npm run design-check` — greps for [lint] rule violations. Must pass.
 - `npm run contrast-check` — APCA verification of theme brand pairs. Must pass after theme changes.
+- `npm run verify-scales` — verifies the complete rendered APCA scale matrix.
 
 ## Hard boundaries (short version, full text in RULES.md)
 

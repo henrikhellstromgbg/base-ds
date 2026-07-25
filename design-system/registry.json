@@ -1,0 +1,36 @@
+{
+  "$schema": "https://base-ds.local/design-system-registry.schema.json",
+  "version": 1,
+  "surfaces": {
+    "scanRoots": ["app", "components", "examples", "lib"],
+    "componentRoot": "components/ui",
+    "viewRoots": ["app", "examples"]
+  },
+  "imports": {
+    "uiPrefix": "@/components/ui/",
+    "iconEntrypoint": "@/components/icons",
+    "iconPackage": "@carbon/icons-react"
+  },
+  "components": [
+    { "entrypoint": "alert-dialog", "exports": ["AlertDialog"] },
+    { "entrypoint": "alert", "exports": ["Alert"] },
+    { "entrypoint": "badge", "exports": ["Badge", "badgeVariants"], "classNamePolicy": "system-owned" },
+    { "entrypoint": "button", "exports": ["Button", "buttonVariants"], "classNamePolicy": "system-owned" },
+    { "entrypoint": "card", "exports": ["Card", "CardHeader", "CardTitle", "CardDescription", "CardContent", "CardFooter"], "classNamePolicy": "system-owned" },
+    { "entrypoint": "data-list", "exports": ["DataList", "DataRow"], "classNamePolicy": "system-owned" },
+    { "entrypoint": "dialog", "exports": ["Dialog", "DialogTrigger", "DialogClose", "DialogContent", "DialogHeader", "DialogTitle", "DialogDescription", "DialogFooter"] },
+    { "entrypoint": "empty-state", "exports": ["EmptyState"] },
+    { "entrypoint": "form-field", "exports": ["Label", "Input", "Textarea", "FormField"] },
+    { "entrypoint": "select", "exports": ["Select", "SelectItem"] },
+    { "entrypoint": "skeleton", "exports": ["Skeleton"] },
+    { "entrypoint": "status-indicator", "exports": ["StatusIndicator"] },
+    { "entrypoint": "table", "exports": ["Table", "TableHeader", "TableBody", "TableRow", "TableHead", "TableCell"] },
+    { "entrypoint": "tabs", "exports": ["Tabs"] }
+  ],
+  "patterns": [
+    { "entrypoint": "page-frame", "exports": ["PageFrame"], "classNamePolicy": "system-owned" },
+    { "entrypoint": "page-header", "exports": ["PageHeader"], "classNamePolicy": "system-owned" },
+    { "entrypoint": "section-header", "exports": ["SectionHeader"], "classNamePolicy": "system-owned" },
+    { "entrypoint": "async-state", "exports": ["AsyncState"], "classNamePolicy": "system-owned" }
+  ]
+}
