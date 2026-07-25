@@ -40,13 +40,13 @@ export default function SettingsView() {
   return (
     <main className="mx-auto flex max-w-3xl flex-col gap-[var(--space-8)] p-[var(--space-8)]">
       <header className="flex flex-col gap-[var(--space-2)]">
-        {/* Eyebrow: sentence case and secondary color (N1). */}
-        <p className="text-[length:var(--text-sm)] text-[var(--color-text-tertiary)]">Workspace settings</p>
+        {/* No eyebrow (C2). "Workspace settings" above "Team members" was two
+            headings competing. The description below carries the context. */}
         <h1 className="text-[length:var(--text-3xl)] font-semibold leading-[var(--leading-tight)] tracking-[var(--tracking-tight)]">
           Team members
         </h1>
         <p className="text-[length:var(--text-base)] text-[var(--color-text-secondary)]">
-          Invite people and manage their access.
+          Invite people to this workspace and manage their access.
         </p>
       </header>
 

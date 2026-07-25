@@ -6,13 +6,28 @@ import { spawnSync } from 'node:child_process';
 
 const checker = fileURLToPath(new URL('./design-check.mjs', import.meta.url));
 
-function runFixture(source) {
+function runFixture(source, dir = 'app') {
   const root = mkdtempSync(join(tmpdir(), 'base-ds-design-check-'));
-  mkdirSync(join(root, 'app'));
-  writeFileSync(join(root, 'app', 'fixture.tsx'), source);
+  mkdirSync(join(root, dir), { recursive: true });
+  writeFileSync(join(root, dir, 'fixture.tsx'), source);
   const result = spawnSync(process.execPath, [checker], { cwd: root, encoding: 'utf8' });
   rmSync(root, { recursive: true, force: true });
   return result;
+}
+
+function expectRules(result, ids, label) {
+  const missing = ids.filter((id) => !result.stderr.includes(id));
+  if (result.status !== 1 || missing.length > 0) {
+    console.error(result.stderr || result.stdout);
+    throw new Error(`${label}: expected ${missing.join(', ') || ids.join(', ')} to be reported.`);
+  }
+}
+
+function expectClean(result, label) {
+  if (result.status !== 0) {
+    console.error(result.stderr || result.stdout);
+    throw new Error(`${label}: expected no violations.`);
+  }
 }
 
 const violations = runFixture(`
@@ -45,5 +60,85 @@ if (clean.status !== 0) {
   console.error(clean.stderr || clean.stdout);
   throw new Error('A valid semantic-token fixture failed design-check.');
 }
+
+// ---- A14: cursor on interactive elements ----------------------------------
+
+expectRules(runFixture(`
+export function Fixture() {
+  return <button className="rounded-[var(--radius-md)]">Save changes</button>;
+}
+`), ['A14'], 'A14 bare button');
+
+expectClean(runFixture(`
+const row = 'cursor-pointer rounded-[var(--radius-md)]';
+export function Fixture({ onPick }) {
+  return <>
+    <button type="button" className={row} onClick={onPick} />
+    <a href="/x">Read more</a>
+    <Button onClick={onPick}>Save changes</Button>
+  </>;
+}
+`, 'components/ui'), 'A14 resolved const, native link, and system component');
+
+// ---- A15: a background needs its own padding ------------------------------
+
+expectRules(runFixture(`
+export function Fixture() {
+  return <div className="hover:bg-[var(--color-surface-hover)]">Weekly digest</div>;
+}
+`), ['A15'], 'A15 hover surface flush against text');
+
+expectClean(runFixture(`
+export function Fixture() {
+  return <>
+    <div className="px-[var(--space-2)] hover:bg-[var(--color-surface-hover)]">Weekly digest</div>
+    <div className="animate-pulse bg-[var(--color-surface-active)]" />
+    <span className="size-11 bg-[var(--color-surface-hover)]">1</span>
+    <table><tbody><tr className="hover:bg-[var(--color-surface-hover)]"><td className="px-4">a</td></tr></tbody></table>
+  </>;
+}
+`), 'A15 padded row, childless block, fixed square, and delegating table row');
+
+// ---- N15: no hand-built clickables in a view ------------------------------
+
+expectRules(runFixture(`
+export function Fixture({ onPick }) {
+  return <>
+    <div onClick={onPick}>Open</div>
+    <button className="cursor-pointer rounded-[var(--radius-md)]">Save changes</button>
+  </>;
+}
+`), ['N15'], 'N15 clickable div and hand-styled button in a view');
+
+expectClean(runFixture(`
+const row = 'cursor-pointer';
+export function DataRow({ onPick }) {
+  return <button type="button" className={row} onClick={onPick} />;
+}
+`, 'components/ui'), 'N15 raw button is allowed inside components/ui');
+
+// ---- C1: sentence case ----------------------------------------------------
+
+expectRules(runFixture(`
+export function Fixture() {
+  return <>
+    <button className="cursor-pointer">Save Changes</button>
+    <h2>SETTINGS</h2>
+    <Label>email address</Label>
+  </>;
+}
+`), ['C1'], 'C1 Title Case, shouting, and a lowercase label');
+
+expectClean(runFixture(`
+export function Fixture({ name }) {
+  return <>
+    <Button>Save changes</Button>
+    <h2>Export to CSV</h2>
+    <h3>Anna Lindqvist</h3>
+    <CardTitle>{name}</CardTitle>
+    <Button title="Remove source">OK</Button>
+  </>;
+}
+`), 'C1 sentence case, acronym, proper noun, interpolation, and OK');
 
 console.log('design-check regression fixtures pass.');

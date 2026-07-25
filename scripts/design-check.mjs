@@ -115,7 +115,208 @@ const RULES = [
   },
 ];
 
+// ---------------------------------------------------------------------------
+// AST rules. A14, A15, N15 and C1 are about element structure, not text, so
+// regex over the source cannot express them. They walk the TypeScript AST
+// instead and each returns { line, snippet } hits.
+// ---------------------------------------------------------------------------
+
+function jsxAttribute(opening, name) {
+  for (const property of opening.attributes.properties) {
+    if (ts.isJsxAttribute(property) && property.name.getText() === name) return property;
+  }
+  return undefined;
+}
+
+// Every class name reachable from an element, following identifiers into their
+// declarations so cn(tabBase, ...) and cva() variants count as the element's
+// own classes. Merging all cva variants together is deliberate: it trades a
+// few misses for near-zero false positives.
+function classNamesFor(opening, declarations) {
+  const attribute = jsxAttribute(opening, 'className');
+  if (!attribute?.initializer) return '';
+  const parts = [];
+  const walk = (node, depth) => {
+    if (!node || depth > 4) return;
+    if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) { parts.push(node.text); return; }
+    if (ts.isIdentifier(node)) {
+      const declaration = declarations.get(node.text);
+      if (declaration) walk(declaration, depth + 1);
+      return;
+    }
+    ts.forEachChild(node, (child) => walk(child, depth));
+  };
+  walk(attribute.initializer, 0);
+  return parts.join(' ');
+}
+
+const INTERACTIVE_PRIMITIVE = /\.(Trigger|Close|Item|Action|Cancel|Thumb|Tab|Link)$/;
+const NON_INTERACTIVE_TAG = /^(div|span|li|tr|td|th|p|section|article|header|footer|aside|nav|ul|ol|figure|img|svg)$/;
+const PADDING = /(?:^|\s)!?(?:p|px|pl|pr)-/;
+const FIXED_SQUARE = /(?:^|\s)!?size-/;
+// A background that hugs its text: state-prefixed, or one of the tokens that
+// only ever paints a chip, row or hover surface.
+const HUGGING_BG = /(?:^|\s)[^\s]*:bg-|bg-\[var\(--color-(?:surface-hover|surface-active|brand-subtle|status-\w+-bg)\)\]/;
+
+const AST_RULES = [
+  {
+    id: 'A14', desc: 'interactive element without cursor-pointer',
+    check(sourceFile, { declarations }) {
+      const hits = [];
+      const visit = (node) => {
+        const opening = ts.isJsxElement(node) ? node.openingElement
+          : ts.isJsxSelfClosingElement(node) ? node : undefined;
+        if (opening) {
+          const tag = opening.tagName.getText();
+          const isIntrinsic = /^[a-z]/.test(tag);
+          const isButton = tag === 'button' || tag === 'summary';
+          const isPrimitive = INTERACTIVE_PRIMITIVE.test(tag);
+          // onClick on a system component inherits that component's cursor.
+          const hasClick = jsxAttribute(opening, 'onClick') !== undefined && (isIntrinsic || isPrimitive);
+          // asChild means the child element owns the DOM node and its classes.
+          const delegates = jsxAttribute(opening, 'asChild') !== undefined;
+          const isNativeLink = tag === 'a' && jsxAttribute(opening, 'href') !== undefined;
+          if ((isButton || isPrimitive || hasClick) && !isNativeLink && !delegates) {
+            const own = opening.getText(sourceFile);
+            const resolved = classNamesFor(opening, declarations);
+            if (!own.includes('cursor-pointer') && !resolved.includes('cursor-pointer')) {
+              hits.push({ node: opening });
+            }
+          }
+        }
+        ts.forEachChild(node, visit);
+      };
+      visit(sourceFile);
+      return hits;
+    },
+  },
+  {
+    id: 'A15', desc: 'element with its own background but no inner padding',
+    check(sourceFile, { declarations }) {
+      const hits = [];
+      const visit = (node) => {
+        // Self-closing elements have no text for the background to hug.
+        const opening = ts.isJsxElement(node) ? node.openingElement : undefined;
+        if (opening) {
+          const tag = opening.tagName.getText();
+          // Table rows and sections delegate padding to their cells, and
+          // full-bleed overlays have no text to hug.
+          const isDelegating = /^(tr|thead|tbody|tfoot|table)$/.test(tag);
+          const classes = classNamesFor(opening, declarations);
+          const isOverlay = classes.includes('inset-0');
+          if (!isDelegating && !isOverlay && HUGGING_BG.test(classes)
+              && !PADDING.test(classes) && !FIXED_SQUARE.test(classes)) {
+            hits.push({ node: opening });
+          }
+        }
+        ts.forEachChild(node, visit);
+      };
+      visit(sourceFile);
+      return hits;
+    },
+  },
+  {
+    id: 'N15', desc: 'hand-built clickable element (use a system component)',
+    // components/ui is where raw interactive elements are allowed to live.
+    scope: (file) => !file.startsWith('components/ui/'),
+    check(sourceFile) {
+      const hits = [];
+      const visit = (node) => {
+        const opening = ts.isJsxElement(node) ? node.openingElement
+          : ts.isJsxSelfClosingElement(node) ? node : undefined;
+        if (opening) {
+          const tag = opening.tagName.getText();
+          const hasClick = jsxAttribute(opening, 'onClick') !== undefined;
+          if (tag === 'button' && jsxAttribute(opening, 'className')) hits.push({ node: opening });
+          else if (hasClick && NON_INTERACTIVE_TAG.test(tag)) hits.push({ node: opening });
+        }
+        ts.forEachChild(node, visit);
+      };
+      visit(sourceFile);
+      return hits;
+    },
+  },
+  {
+    id: 'C1', desc: 'UI copy is not sentence case',
+    check(sourceFile) {
+      const hits = [];
+      const flag = (text, node) => { if (copyProblem(text)) hits.push({ node }); };
+      const visit = (node) => {
+        if (ts.isJsxElement(node) && COPY_TAG.test(node.openingElement.tagName.getText())) {
+          // Pure text only. Anything with an interpolation is runtime copy we
+          // cannot judge, and partial text fragments read as false positives.
+          const children = node.children.filter((child) => !(ts.isJsxText(child) && child.text.trim() === ''));
+          if (children.length === 1 && ts.isJsxText(children[0])) {
+            flag(children[0].text.trim(), children[0]);
+          }
+        }
+        const opening = ts.isJsxElement(node) ? node.openingElement
+          : ts.isJsxSelfClosingElement(node) ? node : undefined;
+        if (opening) {
+          for (const name of ['title', 'label', 'confirmLabel', 'cancelLabel']) {
+            const attribute = jsxAttribute(opening, name);
+            const value = attribute?.initializer;
+            if (value && ts.isStringLiteral(value)) flag(value.text, value);
+          }
+        }
+        ts.forEachChild(node, visit);
+      };
+      visit(sourceFile);
+      return hits;
+    },
+  },
+];
+
+const COPY_TAG = /^(button|Button|h[1-6]|Label|CardTitle|DialogTitle|AlertTitle|AlertDialogTitle)$/;
+// Words that carry no case signal in a title.
+const SMALL_WORDS = new Set(['a', 'an', 'the', 'and', 'or', 'but', 'of', 'in', 'on', 'to', 'for', 'with', 'at', 'by', 'from', 'as', 'is', 'it', 'per', 'via', 'up', 'off']);
+// Capitalising one of these mid-string means Title Case, not a proper noun.
+// Deliberately a vocabulary list and not a rule: it keeps names like
+// "Anna Lindqvist" and "Stena Line" out of the results.
+const UI_VOCABULARY = new Set(['save', 'saved', 'cancel', 'delete', 'deleted', 'remove', 'removed', 'edit', 'create', 'created', 'add', 'added', 'new', 'change', 'changes', 'settings', 'member', 'members', 'invite', 'account', 'profile', 'password', 'email', 'name', 'source', 'sources', 'item', 'items', 'view', 'detail', 'details', 'all', 'more', 'less', 'back', 'next', 'previous', 'continue', 'done', 'close', 'open', 'upload', 'download', 'export', 'import', 'search', 'filter', 'sort', 'select', 'choose', 'apply', 'reset', 'clear', 'confirm', 'submit', 'send', 'share', 'copy', 'move', 'rename', 'archive', 'archived', 'restore', 'publish', 'published', 'draft', 'preview', 'help', 'about', 'home', 'dashboard', 'overview', 'activity', 'history', 'notification', 'notifications', 'team', 'teams', 'project', 'projects', 'user', 'users', 'file', 'files', 'folder', 'folders', 'page', 'pages', 'report', 'reports', 'list', 'lists', 'group', 'groups', 'tag', 'tags', 'label', 'labels', 'status', 'type', 'date', 'time', 'size', 'action', 'actions', 'options', 'general', 'security', 'privacy', 'billing', 'plan', 'usage', 'log', 'logs', 'key', 'keys', 'token', 'tokens', 'connect', 'connected', 'disconnect', 'started', 'get', 'learn', 'read', 'write', 'manage', 'configure', 'enable', 'disable', 'start', 'stop', 'pause', 'paused', 'resume', 'retry', 'refresh', 'update', 'upgrade', 'install', 'workspace', 'workspaces', 'frequency', 'attention']);
+// Acronyms that are allowed to stay capitalised.
+const ACRONYMS = new Set(['OK', 'API', 'PDF', 'CSV', 'URL', 'ID', 'UI', 'UX', 'AI', 'SEO', 'HTML', 'CSS', 'RSS', 'PIN', 'OTP', 'SSO', 'FAQ', 'GDPR', 'JSON', 'XML', 'SQL', 'CPU', 'DNS', 'SMS', 'PDF', 'ZIP', 'GIF', 'PNG', 'JPG', 'SVG', 'MFA', 'VAT', 'EU', 'US', 'UK']);
+// First words that are lowercase on purpose.
+const LOWERCASE_BRANDS = new Set(['npm', 'iOS', 'iPhone', 'iPad', 'eBay', 'macOS', 'base-ds', 'ux', 'ui']);
+
+function copyProblem(text) {
+  const value = text.replace(/\s+/g, ' ').trim();
+  if (!value || /^[^\p{L}]*$/u.test(value)) return false;
+  const words = value.split(' ');
+
+  for (const word of words) {
+    const bare = word.replace(/[^\p{L}]/gu, '');
+    if (bare.length >= 2 && bare === bare.toUpperCase() && /\p{L}/u.test(bare) && !ACRONYMS.has(bare)) {
+      return true; // shouting
+    }
+  }
+
+  for (const word of words.slice(1)) {
+    const bare = word.replace(/[^\p{L}]/gu, '');
+    if (!bare || SMALL_WORDS.has(bare.toLowerCase())) continue;
+    const capitalised = bare[0] === bare[0].toUpperCase() && bare.slice(1) !== bare.slice(1).toUpperCase();
+    if (capitalised && UI_VOCABULARY.has(bare.toLowerCase())) return true; // Title Case
+  }
+
+  const first = words[0].replace(/[^\p{L}-]/gu, '');
+  if (first && /^\p{Ll}/u.test(first) && !LOWERCASE_BRANDS.has(first)) return true; // lowercase label
+
+  return false;
+}
+
 const violations = [];
+
+function buildDeclarations(sourceFile) {
+  const declarations = new Map();
+  const visit = (node) => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer) {
+      declarations.set(node.name.text, node.initializer);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(sourceFile);
+  return declarations;
+}
 
 function collectConstantValues(sourceFile) {
   const declarations = new Map();
@@ -213,6 +414,16 @@ function scan(dir) {
 
     if (!entry.endsWith('.css')) {
       const sourceFile = ts.createSourceFile(full, raw, ts.ScriptTarget.Latest, true, entry.endsWith('x') ? ts.ScriptKind.TSX : ts.ScriptKind.TS);
+      const file = relative(process.cwd(), full);
+      const declarations = buildDeclarations(sourceFile);
+      for (const rule of AST_RULES) {
+        if (rule.scope && !rule.scope(file)) continue;
+        for (const { node } of rule.check(sourceFile, { declarations, file })) {
+          const lineNo = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile)).line + 1;
+          const line = lines[lineNo - 1] ?? '';
+          violations.push({ file, line: lineNo, rule: rule.id, desc: rule.desc, snippet: line.trim().slice(0, 80) });
+        }
+      }
       for (const { value, node } of collectConstantValues(sourceFile)) {
         for (const rule of RULES.filter(({ id }) => ['N1', 'N2', 'N4'].includes(id))) {
           if (rule.test(value).length === 0) continue;
