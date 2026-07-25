@@ -14,7 +14,7 @@ const tokenItem = shadcnRegistry.items.find((item) => item.name === 'base-ds-tok
 assert.ok(tokenItem, 'The generated shadcn registry must include base-ds-tokens.');
 assert.deepEqual(
   Object.keys(tokenItem.css ?? {}),
-  ['@import "../tokens/primitives.css"', '@import "../tokens/semantic.css"'],
+  ["@import '../tokens/primitives.css'", "@import '../tokens/semantic.css'"],
   'Token imports must resolve relative to app/globals.css; TypeScript path aliases are not resolved by PostCSS.',
 );
 

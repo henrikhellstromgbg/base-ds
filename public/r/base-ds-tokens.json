@@ -18,8 +18,8 @@
     }
   ],
   "css": {
-    "@import \"../tokens/primitives.css\"": {},
-    "@import \"../tokens/semantic.css\"": {}
+    "@import '../tokens/primitives.css'": {},
+    "@import '../tokens/semantic.css'": {}
   },
   "type": "registry:style"
 }
