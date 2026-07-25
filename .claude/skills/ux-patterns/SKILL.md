@@ -1,6 +1,6 @@
 ---
 name: ux-patterns
-description: Decision rules for interaction form. Consult BEFORE building any new view, flow, or overlay, and before adding any form. Answers one question: what shape should this interaction take (page, modal, drawer, popover, inline), and which control fits the data. Does not cover visual styling (RULES.md), component construction (new-component), or contrast (checks).
+description: "Decision rules for interaction form. Consult BEFORE building any new view, flow, or overlay, and before adding any form. Answers one question: what shape should this interaction take (page, modal, drawer, popover, inline), and which control fits the data. Does not cover visual styling (RULES.md), component construction (new-component), or contrast (checks)."
 ---
 
 # UX patterns
